@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>demo</title>
+	<style type="text/css">
+	body,html{
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	}
+	.bg{
+		position: relative;
+		width: 100%;
+		height: 100%;
+		background-size: 100% 100%;
+		background-color:#122333;
+	}
+	.container{
+		color: #b6b6b6;
+		width: 50%;
+		height :50%;
+		position: relative;
+		top: 10%;
+		margin:auto;
+	}
+	</style>
+</head>
+<body>
+	<div class="bg">
+		<div class="container" id="container">
+		</div>
+	</div>
+<script type="text/javascript" src="../js/jquery-3.1.0.min.js"></script>
+<script type="text/javascript" src="../js/echarts/echarts.min.js"></script>
+<script type="text/javascript" src="../js/highcharts/highcharts.js"></script>
+<script type="text/javascript" src="../js/amcharts/amcharts.js"></script>
+<script type="text/javascript" src="../js/amcharts/serial.js"></script>
+<script type="text/javascript" src="../js/fusioncharts/fusioncharts.js"></script>
+<script type="text/javascript" src="../js/fusioncharts/themes/fusioncharts.theme.ocean.js"></script>
+<script type="text/javascript">
+	$(function () {
+		var datas = [{
+			"label": "USA",
+			"value": 4025,
+			"color": "#FF0F00"
+		}, {
+			"label": "China",
+			"value": 1882,
+			"color": "#FF6600"
+		}, {
+			"label": "Japan",
+			"value": 1809,
+			"color": "#FF9E01"
+		}, {
+			"label": "Germany",
+			"value": 1322,
+			"color": "#FCD202"
+		}, {
+			"label": "UK",
+			"value": 1122,
+			"color": "#F8FF01"
+		}, {
+			"label": "France",
+			"value": 1114,
+			"color": "#B0DE09"
+		}, {
+			"label": "India",
+			"value": 984,
+			"color": "#04D215"
+		}, {
+			"label": "Spain",
+			"value": 711,
+			"color": "#0D8ECF"
+		}];
+		FusionCharts.ready(function () {
+		var wVstrsChart = new FusionCharts({
+           type: "column3d",
+           renderAt: "container",
+           width: '640',
+           height: '650',
+           dataFormat: 'json',
+           dataSource: { 
+           	"chart": {
+           		"outCnvbaseFontColor":"#A2E9FF",//图表画布以外的字体颜色
+           		"paletteColors":"#35E44E",//自定义颜色
+           	    "bgAlpha": "0",//图例透明度
+           	    "bgAngle":"40",
+                   "valueFontColor": "#B9A127",
+                   "showValues":true,//是否在图表显示对应的数据值默认为true
+                   "manageLabelOverflow":false,//当Label溢出时进行自动管理
+                   "showCanvasBase":false,//是否显示底盘
+                   "showCanvasBg":false,//是否显示画布背景
+                   "yAxisMaxValue":"6",//y轴最大值
+                   "yDivLineColor":true,//水平分隔线
+                   "plotSpacePercent":"30",//控制柱状图宽度
+                   "outCnvbaseFontColor":"#999FAC",//图表画布以外的颜色
+                   "formatNumberScale":"0",//是否格式化数字 ，默认为1加K或M；0时不加K或M
+                   "divLineColor":"#051530", //水平分区线的颜色#051530
+                   "labelDisplay":"WRAP",
+                   "plottooltext":"$label,$value个"//tooltext
+           },
+           "data":datas,
+           }
+       });
+		 wVstrsChart.setTransparent(true);
+		 wVstrsChart.render();
+	 });
+	});
+</script>
+</body>
+</html>

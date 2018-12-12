@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>demo</title>
+	<style type="text/css">
+	body,html{
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	}
+	.bg{
+		position: relative;
+		width: 100%;
+		height: 100%;
+		background-size: 100% 100%;
+		background-color:#122333;
+	}
+	.container{
+		color: #b6b6b6;
+		width: 50%;
+		height :50%;
+		position: relative;
+		top: 20%;
+		margin:auto;
+	}
+	</style>
+</head>
+<body>
+	<div class="bg">
+		<div class="container" id="container">
+			
+		</div>
+	</div>
+<script type="text/javascript" src="../js/jquery-3.1.0.min.js"></script>
+<script type="text/javascript" src="../js/echarts/echarts.min.js"></script>
+<script type="text/javascript" src="../js/highcharts/highcharts.js"></script>
+<script type="text/javascript">
+	$(function(){
+		var xList = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15];
+		var datas = [0,0,0,2,1,0,0,1,0,2,0,0,0,0,1,0,0,0];
+		var container = echarts.init(document.getElementById('container'),'');
+		var option = {
+		    tooltip: { //设置触发类型
+		        trigger: 'axis',
+		        formatter:'{b}年<br/>{a}:{c}次'
+		    },
+		    noDataLoadingOption:{
+		    	text :"No data to display.",
+		    	   	effect : 'bubble',
+		    	   	effectOption:{
+		    	   	backgroundColor:'rgba(255,255,255,0)',
+		    	   	effect: {
+		    	   		n: 0
+		    	   	}
+		    	}
+		    },
+		    grid: {x:40,y:40,x2:40,y2:20,borderWidth:0},
+		    xAxis:  {
+		    	name:'年限',
+		        type: 'category',
+		        boundaryGap: false,//false表示节点在x轴区域刻度上显示，如果不写则会显示在区域中间
+		        splitLine: {show:true,lineStyle: {type: 'solid',color:'#06224F'}}, //网格操作
+		        　　axisLabel: {//x轴刻度显示设置
+		        　　interval: 0,//0表示全部显示
+					textStyle:{
+						color:'#999FAC'
+					}
+		        }, 
+				axisTick: {show:false},
+		        axisLine: {//坐标轴轴线的设置
+		        	lineStyle: {
+		        		width: 0,
+		        		color: '#999FAC'
+		        	}
+		        },        
+		        data: xList,
+		        splitArea: {
+		        　　show: true,
+					areaStyle: {
+						color: ['#061220','#021527']
+		            }
+		        },//表示显示坐标轴的块
+		    },
+		    yAxis: {
+		    	name:'事故次数',
+		        type: 'value',
+				axisTick: {show:false},
+		        splitNumber:3,//设置y轴上的刻度值
+		               　　splitLine: {show:true,lineStyle: {type: 'solid',color:'#06224F'}},
+		        axisLabel: {//y轴刻度显示设置
+		        	formatter: '{value} ',
+			          textStyle:{
+			        	  color: '#999FAC',
+			        	  fontsize: 15
+			          }
+			    }, 
+		        axisLine: {
+				    lineStyle: {
+				       width: 0,
+				       color: '#999FAC'
+				    }
+				},
+		    },
+		    series: [  //对图形内容进行操作
+		        {
+		            name:'运行时限',
+		            type:'line',
+		            itemStyle:{
+		            	normal:{
+		            		color:'#D2F2F2', //改变曲线节点的颜色
+		            		shadowColor:'#D2F2F2',
+		            	    shadowBlur: 10,
+		            		borderWidth:5,
+		            		opacity:0.3,
+		            	    lineStyle:{
+		                             color:'#0E8184'//改变曲线的颜色
+		                     },
+		                    areaStyle: {
+				            		color : 'rgba(1,181,109,0.3)'
+				            },
+		            	},
+		            },
+		            data:datas,
+		        },
+		    ]
+		};
+		container.setOption(option,true);
+		//自适应
+		window.addEventListener("resize",function(){
+			container.resize();
+		});
+	});
+</script>
+</body>
+</html>

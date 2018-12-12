@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>demo</title>
+	<style type="text/css">
+	body,html{
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	}
+	.bg{
+		position: relative;
+		width: 100%;
+		height: 100%;
+		background-size: 100% 100%;
+		background-color:#122333;
+	}
+	.container{
+		color: #b6b6b6;
+		width: 50%;
+		height :50%;
+		position: relative;
+		top: 20%;
+		margin:auto;
+	}
+	</style>
+</head>
+<body>
+	<div class="bg">
+		<div class="container" id="container">
+			
+		</div>
+	</div>
+<script type="text/javascript" src="../js/jquery-3.1.0.min.js"></script>
+<script type="text/javascript" src="../js/echarts/echarts.min.js"></script>
+<script type="text/javascript" src="../js/highcharts/highcharts.js"></script>
+<script type="text/javascript">
+	$(function () {
+		var data = [{name:'东部',value:50},
+		{name:'西部',value:10},
+		{name:'北部',value:20},
+		{name:'中部',value:20}];
+		data.sort(sortBy('value',true,parseFloat));
+		var container = echarts.init(document.getElementById('container'),'');
+		var option = {
+		    grid: {
+		        left: '0',
+		        right: '5%',
+		        bottom: '0',
+		        top:'5%',
+		        containLabel: true
+		    },
+		    color: [
+		        'rgba(42,54,208,0.3)',
+		        'rgba(1,232,232,0.3)',
+		        'rgba(1,140,64,0.3)',
+		        'rgba(191,191,192,0.3)'
+		    ],
+		    series : [
+		        {
+		            type:'pie',
+		            radius : '65%',
+		            center: ['50%', '50%'],
+		            startAngle: 80,
+		            data:data,
+		            roseType: 'angle',
+		            label: {
+		                normal: {
+		                    formatter: '{a|{b}  {c}MW}\n总出力占比：{b|{d}%}',
+		                    backgroundColor: 'rgba(32,42,54,0.5)',
+		                    borderWidth:2,
+		                    borderColor:'#d2d2d2',
+		                    borderRadius: 13,
+		                    padding: 7,
+		                    textStyle : {
+		                        color: '#fff',
+		                        fontSize: 24,
+		                        lineHeight:37,
+		                        align:'left'
+		                    },
+		                    rich: {
+		                        a: {
+		                            color: '#58edff',
+		                            fontSize: 24,
+		                            align:'left'
+		                        },
+		                        b: {
+		                            color: '#fff100',
+		                            fontSize: 24,
+		                            align:'left'
+		                        }
+		                    }
+		                }
+		            },
+		            labelLine: {
+		                normal: {
+		                    lineStyle: {
+		                        color: 'rgba(255, 255, 255, 0.3)'
+		                    },
+		                    smooth: 0.2,
+		                    length: 20,
+		                    length2: 40
+		                }
+		            },
+		            itemStyle: {
+		                normal: {
+		                    borderWidth:4,
+		                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+		                }
+		            }
+		        }
+		    ]
+		};
+		container.setOption(option,true);
+		window.addEventListener("resize",function(){
+			container.resize();
+		});
+	});
+	/**
+	 * 针对数组键值排序
+	 */
+	var sortBy=function (filed,rev,primer){
+		rev = (rev) ? -1 : 1;
+		return function (a, b) {
+			a = a[filed];
+			b = b[filed];
+			if (typeof (primer) != 'undefined') {
+			  a = primer(a);
+			  b = primer(b);
+			}
+			if (a < b) { return rev * -1; }
+			if (a > b) { return rev * 1; }
+			return 1;
+		}
+	};
+</script>
+</body>
+</html>

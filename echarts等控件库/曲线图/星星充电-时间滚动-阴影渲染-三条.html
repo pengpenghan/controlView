@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>demo</title>
+	<style type="text/css">
+	body,html{
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	}
+	.bg{
+		position: relative;
+		width: 100%;
+		height: 100%;
+		background-size: 100% 100%;
+		background-color:#122333;
+	}
+	.container{
+		color: #b6b6b6;
+		width: 50%;
+		height :50%;
+		position: relative;
+		top: 20%;
+		margin:auto;
+	}
+	</style>
+</head>
+<body>
+	<div class="bg">
+		<div class="container" id="container">
+			
+		</div>
+	</div>
+<script type="text/javascript" src="../js/jquery-3.1.0.min.js"></script>
+<script type="text/javascript" src="../js/echarts/echarts.min.js"></script>
+<script type="text/javascript" src="../js/highcharts/highcharts.js"></script>
+<script type="text/javascript">
+	$(function(){
+		Highcharts.setOptions({
+		global: {
+			useUTC: false
+		}
+	});
+	function activeLastPointToolip(chart) {
+		var points = chart.series[0].points;
+		chart.tooltip.refresh(points[points.length - 1]);
+	}
+	$('#container')
+		.highcharts(
+		{
+			credits: {
+				enabled: false
+			},
+			chart: {
+				type: 'areaspline',
+				plotBorderWidth: 1,
+				backgroundColor: 'rgba(0,0,0,0)',
+				plotBorderColor: '#BE56DD',
+				plotBorderWidth: 2,
+				marginTop: 10,
+				animation: Highcharts.svg, // don't animate in old
+				// IE
+				marginLeft: 40,
+				marginRight: 5,
+				marginBottom: 40,
+				events: {
+					<!-- load: function () { -->
+						<!-- // set up the updating of the chart each -->
+						<!-- // second -->
+						<!-- var series = this.series[0]; -->
+						<!-- var series1 = this.series[1]; -->
+						<!-- var series2 = this.series[2]; -->
+						<!-- setInterval( -->
+							<!-- function () { -->
+								<!-- var data = { -->
+									<!-- type: 1 -->
+								<!-- }; -->
+								<!-- $ -->
+									<!-- .ajax({ -->
+										<!-- type: "post", -->
+										<!-- url: interface_url + "/api/em/securityWarning/informationSafty", -->
+										<!-- data: { -->
+											<!-- 'FRAMEparams': JSON.stringify(data) -->
+										<!-- }, -->
+										<!-- async: true, -->
+										<!-- success: function ( -->
+											<!-- xhr) { -->
+											<!-- var resultData = JSON -->
+												<!-- .parse(xhr); -->
+											<!-- if (resultData.code == 200) { -->
+												<!-- if (null != resultData.data) { -->
+													<!-- var x = (new Date()) -->
+														<!-- .getTime(); -->
+													<!-- var datas = resultData.data.LineSystemAverageLoadData[0]; -->
+													<!-- var y1 = parseFloat(datas[3]); -->
+													<!-- var y2 = parseFloat(datas[4]); -->
+													<!-- var y3 = parseFloat(datas[5]); -->
+
+													<!-- var fifteenMin = datas[1] == null -->
+														<!-- ? 0 -->
+														<!-- : datas[1]; -->
+													<!-- var oneMin = datas[2] == null -->
+														<!-- ? 0 -->
+														<!-- : datas[2]; -->
+													<!-- $("#fifteenMin") -->
+														<!-- .text( -->
+														<!-- fifteenMin); -->
+													<!-- $("#oneMin") -->
+														<!-- .text( -->
+														<!-- oneMin); -->
+													<!-- // 负载1 -->
+													<!-- series -->
+														<!-- .addPoint( -->
+														<!-- [ -->
+															<!-- x, -->
+															<!-- y1], -->
+														<!-- true, -->
+														<!-- true); -->
+													<!-- // 负载2 -->
+													<!-- series1 -->
+														<!-- .addPoint( -->
+														<!-- [ -->
+															<!-- x, -->
+															<!-- y2], -->
+														<!-- true, -->
+														<!-- true); -->
+													<!-- // 负载3 -->
+													<!-- series2 -->
+														<!-- .addPoint( -->
+														<!-- [ -->
+															<!-- x, -->
+															<!-- y3], -->
+														<!-- true, -->
+														<!-- true); -->
+												<!-- } -->
+											<!-- } -->
+										<!-- }, -->
+										<!-- error: function ( -->
+											<!-- xhr) { -->
+											<!-- console.log(xhr); -->
+										<!-- } -->
+									<!-- }); -->
+							<!-- }, 5 * 1000); -->
+					<!-- } -->
+					load: function () {
+						// set up the updating of the chart each second
+						var series = this.series[0],
+						chart = this;
+						var series1 = this.series[1];
+						var series2 = this.series[2];
+						setInterval(function () {
+							var x = (new Date()).getTime(), // current time
+								y = Math.random();
+							series.addPoint([x, y], true, true);
+							var x = (new Date()).getTime(), // current time
+								y = Math.random();
+							series1.addPoint([x, y], true, true);
+							var x = (new Date()).getTime(), // current time
+								y = Math.random();
+							series2.addPoint([x, y], true, true);
+							activeLastPointToolip(chart)
+						}, 1000);
+					}
+				}
+			},
+			title: {
+				text: ''
+			},
+			xAxis: {
+				type: 'datetime',
+				gridLineWidth: 0,
+				lineColor: '#BE56DD',
+				lineWidth: 1,
+				tickWidth: 0,
+				gridLineColor: '#BE56DD',
+				labels: {
+					y: 25,
+					enabled: true,
+					step: 1,
+					autoRotation: -45,
+					style: {
+						color: '#8EAFDA',
+						fontSize: 10,
+						fontFamily: '微软雅黑'
+					},
+					formatter: function () {
+						return Highcharts.dateFormat('%H:%M',
+							this.value);
+					}
+				},
+				plotLines: [{
+					width: 2,
+					color: '#BE56DD'
+				}]
+			},
+			yAxis: {
+				lineColor: '#BE56DD',
+				lineWidth: 1.5,
+				gridLineWidth: 0,
+				min: 0,
+				gridLineColor: '#BE56DD',
+				title: {
+					text: '',
+				},
+				labels: {
+					style: {
+						color: '#BE56DD',
+						fontSize: 10,
+						fontFamily: '微软雅黑'
+					}
+				},
+				plotLines: [{
+					color: '#BE56DD',
+					width: 2
+				}]
+			},
+			tooltip: {
+				formatter: function () {
+					return '<b>'
+						+ this.series.name
+						+ '</b><br/>'
+						+ Highcharts.dateFormat(
+							'%Y-%m-%d %H:%M:%S', this.x)
+						+ '<br/>'
+						+ Highcharts.numberFormat(this.y, 2);
+				}
+			},
+			legend: {
+				enabled: false
+			},
+			exporting: {
+				enabled: false
+			},
+			series: [
+				{
+					name: '负载1',
+					color: '#BE56DD',
+					lineWidth: 1,
+					lineColor: '#BE56DD',
+					marker: {
+						radius: 0
+					},
+					fillColor: "rgba(173,81,208,0.2)",
+					<!-- data: (function () { -->
+						<!-- // index:x轴定义 -->
+						<!-- if (null != resultData) { -->
+							<!-- var data = [], time = (new Date()) -->
+								<!-- .getTime(), index = -resultData.length; -->
+							<!-- // reverse()倒序 -->
+							<!-- $ -->
+								<!-- .each( -->
+								<!-- resultData -->
+									<!-- .reverse(), -->
+								<!-- function (i, datas) { -->
+									<!-- data -->
+										<!-- .push({ -->
+											<!-- x: time -->
+											<!-- + index -->
+											<!-- * 5 -->
+											<!-- * 1000, -->
+											<!-- y: parseFloat(datas[3]) -->
+										<!-- }); -->
+									<!-- if (i + 1 == resultData.length) {// 最后一个点 -->
+										<!-- var fifteenMin = datas[1] == null -->
+											<!-- ? 0 -->
+											<!-- : datas[1]; -->
+										<!-- var oneMin = datas[2] == null -->
+											<!-- ? 0 -->
+											<!-- : datas[2]; -->
+										<!-- $( -->
+											<!-- "#fifteenMin") -->
+											<!-- .text( -->
+											<!-- fifteenMin); -->
+										<!-- $("#oneMin") -->
+											<!-- .text( -->
+											<!-- oneMin); -->
+									<!-- } -->
+									<!-- index++; -->
+								<!-- }); -->
+						<!-- } -->
+						<!-- return data; -->
+					<!-- }()) -->
+					data: (function () {
+					// generate an array of random data
+					var data = [],
+						time = (new Date()).getTime(),
+						i;
+					for (i = -19; i <= 0; i += 1) {
+						data.push({
+							x: time + i * 1000,
+							y: Math.random()
+						});
+					}
+					return data;
+				}())
+				},
+				{
+					name: '负载2',
+					color: '#BD0872',
+					lineWidth: 1,
+					lineColor: '#BD0872',
+					marker: {
+						radius: 0
+					},
+					fillColor: "rgba(224,43,138,0.2)",
+					<!-- data: (function () { -->
+						<!-- if (null != resultData) { -->
+							<!-- var data = [], time = (new Date()) -->
+								<!-- .getTime(), index = -resultData.length; -->
+							<!-- // reverse()倒序 -->
+							<!-- $ -->
+								<!-- .each( -->
+								<!-- resultData -->
+									<!-- .reverse(), -->
+								<!-- function (i, datas) { -->
+									<!-- data -->
+										<!-- .push({ -->
+											<!-- x: time -->
+											<!-- + index -->
+											<!-- * 5 -->
+											<!-- * 1000, -->
+											<!-- y: parseFloat(datas[4]) -->
+										<!-- }); -->
+									<!-- index++; -->
+								<!-- }); -->
+						<!-- } -->
+						<!-- return data; -->
+					<!-- }()) -->
+					data: (function () {
+					// generate an array of random data
+					var data = [],
+						time = (new Date()).getTime(),
+						i;
+					for (i = -19; i <= 0; i += 1) {
+						data.push({
+							x: time + i * 1000,
+							y: Math.random()
+						});
+					}
+					return data;
+				}())
+				},
+				{
+					name: '负载3',
+					color: '#1F74C1',
+					lineWidth: 1,
+					lineColor: '#1F74C1',
+					marker: {
+						radius: 0
+					},
+					fillColor: "rgba(31,116,193,0.2)",
+					<!-- data: (function () { -->
+						<!-- if (null != resultData) { -->
+							<!-- var data = [], time = (new Date()) -->
+								<!-- .getTime(), index = -resultData.length; -->
+							<!-- // reverse()倒序 -->
+							<!-- $ -->
+								<!-- .each( -->
+								<!-- resultData -->
+									<!-- .reverse(), -->
+								<!-- function (i, datas) { -->
+									<!-- data -->
+										<!-- .push({ -->
+											<!-- x: time -->
+											<!-- + index -->
+											<!-- * 5 -->
+											<!-- * 1000, -->
+											<!-- y: parseFloat(datas[5]) -->
+										<!-- }); -->
+									<!-- index++; -->
+								<!-- }); -->
+						<!-- } -->
+						<!-- return data; -->
+					<!-- }()) -->
+					data: (function () {
+					// generate an array of random data
+					var data = [],
+						time = (new Date()).getTime(),
+						i;
+					for (i = -19; i <= 0; i += 1) {
+						data.push({
+							x: time + i * 1000,
+							y: Math.random()
+						});
+					}
+					return data;
+				}())
+				}
+
+			]
+		}, function (c) {
+			// activeLastPointToolip(c)
+		});
+	});
+</script>
+</body>
+</html>

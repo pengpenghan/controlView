@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>demo</title>
+	<style type="text/css">
+	body,html{
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	}
+	.bg{
+		position: relative;
+		width: 100%;
+		height: 100%;
+		background-size: 100% 100%;
+		background-color:#122333;
+	}
+	.container{
+		color: #b6b6b6;
+		width: 50%;
+		height :50%;
+		position: relative;
+		top: 20%;
+		margin:auto;
+	}
+	</style>
+</head>
+<body>
+	<div class="bg">
+		<div class="container" id="container">
+			
+		</div>
+	</div>
+<script type="text/javascript" src="../js/jquery-3.1.0.min.js"></script>
+<script type="text/javascript" src="../js/echarts/echarts.min.js"></script>
+<script type="text/javascript" src="../js/highcharts/highcharts.js"></script>
+<script type="text/javascript">
+	$(function () {
+		var option = {
+			color : ['#CF9357', '#A9C86A', '#C79641', '#85DD86', '#483699',
+				'#C33533', '#2D464F', '#61A0A9', '#4C7DD9', '#D58165',
+				'#91C7AD'],
+			title : {
+				text: ''
+			},
+			tooltip : {
+				axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+					 type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+				},
+				borderColor: '#43845D',
+				borderWidth: 1,
+				backgroundColor: 'rgba(11,42,89,0.3)',
+				formatter: "{b} : {c} ({d}%)"
+			},
+			legend: {
+				show: false
+			},
+			series : [
+				{
+					type:'pie',
+					radius : '55%',
+					center: ['50%', '60%'],
+					labelLine:{
+					normal:{
+						show: true,
+						length : 20,
+						length2 : 10,
+						lineStyle:{
+							color: '#8796AE'
+						}
+						}
+					},
+					label: {
+						normal: {
+							show : true,
+							position: 'outer',
+							formatter : ['{a|{b}}', '{b|{c}}{c|({d}%)}', ''].join('\n'),
+							rich : {
+								a : {
+									color : '#8796AE',
+									fontSize : 20,
+									fontWeight : 'bold',
+									lineHeight : 20
+								},
+								b : {
+									color : '#F8A34C',
+									fontSize : 18,
+									height : 14
+								},
+								c : {
+									color : '#8796AE',
+									fontSize : 18
+								}
+							}
+						}
+					},
+					data:[
+						{value:335, name:'其他省市'},
+						{value:310, name:'湖南'},
+						{value:234, name:'山东'},
+						{value:135, name:'其他'},
+						{value:100, name:'安徽'},
+						{value:100, name:'北京'},
+						{value:100, name:'福建'},
+						{value:1548, name:'浙江'},
+						{value:100, name:'上海'},
+						{value:100, name:'江苏'},
+						{value:1548, name:'广东'}
+					]
+				}
+			]
+		};
+		var container = echarts.init(document.getElementById("container"),'');
+		container.setOption(option,true);
+		window.addEventListener("resize",function(){
+			myChart.resize();
+		});
+	});
+</script>
+</body>
+</html>

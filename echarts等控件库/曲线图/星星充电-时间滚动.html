@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>demo</title>
+	<style type="text/css">
+	body,html{
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	}
+	.bg{
+		position: relative;
+		width: 100%;
+		height: 100%;
+		background-size: 100% 100%;
+		background-color:#122333;
+	}
+	.container{
+		color: #b6b6b6;
+		width: 50%;
+		height :50%;
+		position: relative;
+		top: 20%;
+		margin:auto;
+	}
+	</style>
+</head>
+<body>
+	<div class="bg">
+		<div class="container" id="container">
+			
+		</div>
+	</div>
+<script type="text/javascript" src="../js/jquery-3.1.0.min.js"></script>
+<script type="text/javascript" src="../js/echarts/echarts.min.js"></script>
+<script type="text/javascript" src="../js/highcharts/highcharts.js"></script>
+<script type="text/javascript">
+	$(function(){
+		Highcharts.setOptions({
+		global: {
+			useUTC: false
+		}
+		});
+		function activeLastPointToolip(chart) {
+			var points = chart.series[0].points;
+			chart.tooltip.refresh(points[points.length -1]);
+		}
+		$('#container').highcharts({
+			credits: {
+				enabled: false
+			},
+			chart: {
+				type: 'areaspline',
+				plotBorderWidth: 1,
+				backgroundColor: 'rgba(0,0,0,0)',
+				plotBorderColor:'#07D1BF',
+				plotBorderWidth: 2,
+				marginTop: 60,
+				animation: Highcharts.svg, // don't animate in old IE
+				marginLeft: 80,
+				marginRight: 10,
+				marginBottom: 60,
+				events: {
+					load: function () {
+						// set up the updating of the chart each second
+						var series = this.series[0],
+							chart = this;
+						setInterval(function () {
+							var x = (new Date()).getTime(), // current time
+								y = Math.random();
+							series.addPoint([x, y], true, true);
+							activeLastPointToolip(chart)
+						}, 1000);
+					}
+				}
+			},
+			title: {
+				text: ''
+			},
+			xAxis: {
+				type: 'datetime',
+				gridLineWidth : 1,
+				lineColor:'#07D1BF',
+				lineWidth : 1,
+				tickWidth: 0,
+				gridLineColor : '#07D1BF',
+				labels:{
+					y: 40,
+					enabled: true,
+					step : 1,
+					autoRotation: -45,
+					style:{
+						color : 'rgba(7,209,191,0.7)',
+						fontSize : 22,
+						fontFamily : '微软雅黑'
+					},
+					formatter: function () {
+						return Highcharts.dateFormat('%H/%M', this.value);
+					}
+				},
+				plotLines: [{
+					width: 2,
+					color: '#0FD502'
+				}]
+			},
+			yAxis: {
+				lineColor:'#07D1BF',
+				lineWidth : 1.5,
+				gridLineWidth : 1,
+				gridLineColor : 'rgba(7,209,191,0.4)',
+				title: {
+					text: '单位（人）',
+					x: 130,
+					y: -30,
+					rotation : 0,
+					align: 'high',
+					style:{
+						color : 'rgba(7,209,191,0.7)',
+						fontSize : 22,
+						fontFamily : '微软雅黑'
+					}
+				},labels:{
+					style:{
+						color : 'rgba(7,209,191,0.7)',
+						fontSize : 22,
+						fontFamily : '微软雅黑'
+					}
+				},
+				plotLines: [{
+					color : '#1F3051',
+					width : 2
+				}]
+			},
+			tooltip: {
+				formatter: function () {
+					return '<b>' + this.series.name + '</b><br/>' +
+						Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' +
+						Highcharts.numberFormat(this.y, 2);
+				}
+			},
+			legend: {
+				enabled: true,
+				verticalAlign :'top',
+				align:'right',
+				squareSymbol: false,//正方形图标
+				symbolRadius:0,
+				symbolHeight:5,
+				symbolWidth:20
+			},
+			exporting: {
+				enabled: false
+			},
+			plotOptions: {
+				areaspline: {
+					fillColor: {
+						linearGradient: {
+							x1: 0,
+							y1: 0,
+							x2: 0,
+							y2: 1
+						},
+						stops: [
+							[0, 'rgba(7,209,191,0.2)'],
+							[0.5, 'rgba(7,209,191,0.1)'],
+							[1, 'rgba(7,209,191,0.01)']
+						]
+					},
+					states: {
+						hover: {
+							lineWidth: 1
+						}
+					},
+					threshold: null
+				}
+			},
+			series: [{
+				name: '每天充电用户',
+				color: '#07D1BF',
+				lineWidth: 3,
+				lineColor: '#07D1BF',
+				marker:{
+					radius : 0
+				},
+				data: (function () {
+					// generate an array of random data
+					var data = [],
+						time = (new Date()).getTime(),
+						i;
+					for (i = -19; i <= 0; i += 1) {
+						data.push({
+							x: time + i * 1000,
+							y: Math.random()
+						});
+					}
+					return data;
+				}())
+			}]
+		}, function(c) {
+			activeLastPointToolip(c)
+		});
+	});
+</script>
+</body>
+</html>

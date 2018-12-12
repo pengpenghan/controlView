@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>demo</title>
+	<style type="text/css">
+	body,html{
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	}
+	.bg{
+		position: relative;
+		width: 100%;
+		height: 100%;
+		background-size: 100% 100%;
+		background-color:#122333;
+	}
+	.container{
+		color: #b6b6b6;
+		width: 50%;
+		height :50%;
+		position: relative;
+		top: 20%;
+		margin:auto;
+	}
+	</style>
+</head>
+<body>
+	<div class="bg">
+		<div class="container" id="container">
+			
+		</div>
+	</div>
+<script type="text/javascript" src="../js/jquery-3.1.0.min.js"></script>
+<script type="text/javascript" src="../js/echarts/echarts.min.js"></script>
+<script type="text/javascript" src="../js/highcharts/highcharts.js"></script>
+<script type="text/javascript">
+	$(function(){
+		Highcharts.setOptions({
+		global: {
+			useUTC: false
+		}
+	});
+	function activeLastPointToolip(chart) {
+		var points = chart.series[0].points;
+		chart.tooltip.refresh(points[points.length - 1]);
+	}
+	$('#container')
+		.highcharts(
+		{
+			credits: {
+				enabled: false
+			},
+			chart: {
+				type: 'areaspline',
+				plotBorderWidth: 1,
+				backgroundColor: 'rgba(0,0,0,0)',
+				plotBorderColor: '#107AB8',
+				plotBorderWidth: 2,
+				marginTop: 10,
+				animation: Highcharts.svg, // don't animate in old
+				// IE
+				marginLeft: 40,
+				marginRight: 5,
+				marginBottom: 40,
+				events: {
+					<!-- load: function () { -->
+						<!-- // set up the updating of the chart each -->
+						<!-- // second -->
+						<!-- var series = this.series[0], chart = this; -->
+						<!-- setInterval( -->
+							<!-- function () { -->
+								<!-- var data = { -->
+									<!-- type: 1 -->
+								<!-- }; -->
+								<!-- $.ajax({ -->
+									<!-- type: "post", -->
+									<!-- url: interface_url + "/api/em/securityWarning/informationSafty", -->
+									<!-- data: { -->
+									<!-- }, -->
+									<!-- async: true, -->
+									<!-- success: function ( -->
+										<!-- xhr) { -->
+										<!-- var _resultData = JSON.parse(xhr); -->
+										<!-- if (_resultData.code == 200) { -->
+											<!-- // time -->
+											<!-- if (null != _resultData.data) { -->
+												<!-- var x = (new Date()).getTime(); -->
+												<!-- var datas = _resultData.data.LineCpuUTLRateData[0]; -->
+												<!-- var y = parseFloat(datas[1]); -->
+												<!-- var cpu = (datas[1] == null -->
+													<!-- ? 0 -->
+													<!-- : datas[1]) -->
+													<!-- + "% " -->
+													<!-- + (datas[2] == null -->
+														<!-- ? 0 -->
+														<!-- : datas[2]); -->
+												<!-- $("#cpu").text(cpu); -->
+												<!-- series.addPoint( -->
+													<!-- [ -->
+														<!-- x, -->
+														<!-- y], -->
+													<!-- true, -->
+													<!-- true); -->
+											<!-- } -->
+										<!-- } -->
+									<!-- }, -->
+									<!-- error: function ( -->
+										<!-- xhr) { -->
+										<!-- console.log(xhr); -->
+									<!-- } -->
+								<!-- }); -->
+							<!-- }, 5 * 1000); -->
+					<!-- } -->
+					load: function () {
+						// set up the updating of the chart each second
+						var series = this.series[0],
+							chart = this;
+						setInterval(function () {
+							var x = (new Date()).getTime(), // current time
+								y = Math.random();
+							series.addPoint([x, y], true, true);
+							activeLastPointToolip(chart)
+						}, 1000);
+					}
+				}
+			},
+			title: {
+				text: ''
+			},
+			xAxis: {
+				type: 'datetime',
+				gridLineWidth: 0,
+				lineColor: '#107AB8',
+				lineWidth: 1,
+				tickWidth: 0,
+				gridLineColor: '#107AB8',
+				labels: {
+					y: 25,
+					enabled: true,
+					step: 1,
+					autoRotation: -45,
+					style: {
+						color: '#8EAFDA',
+						fontSize: 10,
+						fontFamily: '微软雅黑'
+					},
+					formatter: function () {
+						return Highcharts.dateFormat('%H:%M',
+							this.value);
+					}
+				},
+				plotLines: [{
+					width: 2,
+					color: '#0FD502'
+				}]
+			},
+			yAxis: {
+				lineColor: '#107AB8',
+				lineWidth: 1.5,
+				gridLineWidth: 0,
+				//max: 100,
+				min: 0,
+				gridLineColor: '#107AB8',
+				//tickPositions: [0, 20, 40, 60, 80, 100],
+				title: {
+					text: '',
+				},
+				labels: {
+					style: {
+						color: '#107AB8',
+						fontSize: 10,
+						fontFamily: '微软雅黑'
+					}
+				},
+				plotLines: [{
+					color: '#1F3051',
+					width: 2
+				}]
+			},
+			tooltip: {
+				formatter: function () {
+					return '<b>'
+						+ this.series.name
+						+ '</b><br/>'
+						+ Highcharts.dateFormat(
+							'%Y-%m-%d %H:%M:%S', this.x)
+						+ '<br/>'
+						+ Highcharts.numberFormat(this.y, 2);
+				}
+			},
+			legend: {
+				enabled: false
+			},
+			exporting: {
+				enabled: false
+			},
+			plotOptions: {
+				areaspline: {
+					fillColor: {
+						linearGradient: {
+							x1: 0,
+							y1: 0,
+							x2: 0,
+							y2: 1
+						},
+						stops: [[0, 'rgba(20,76,236,0.2)'],]
+					},
+					states: {
+						hover: {
+							lineWidth: 1
+						}
+					},
+					threshold: null
+				}
+			},
+			series: [{
+				name: 'CPU使用率',
+				color: '#07D1BF',
+				lineWidth: 1,
+				lineColor: '#107AB8',
+				marker: {
+					radius: 0
+				},
+				<!-- data: (function () { -->
+					<!-- // index:x轴定义 -->
+					<!-- if (null != resultData) { -->
+						<!-- var data = [], time = (new Date()) -->
+							<!-- .getTime(), index = -resultData.length; -->
+						<!-- // reverse()倒序 -->
+						<!-- $.each(resultData.reverse(), function (i, -->
+							<!-- datas) { -->
+							<!-- data.push({ -->
+								<!-- x: time + index * 5 * 1000, -->
+								<!-- y: parseFloat(datas[1]) -->
+							<!-- }); -->
+							<!-- if (i + 1 == resultData.length) {// 最后一个点 -->
+								<!-- var cpu = (datas[1] == null -->
+									<!-- ? 0 -->
+									<!-- : datas[1]) -->
+									<!-- + "% " -->
+									<!-- + (datas[2] == null -->
+										<!-- ? 0 -->
+										<!-- : datas[2]); -->
+								<!-- $("#cpu").text(cpu); -->
+							<!-- } -->
+							<!-- index++; -->
+						<!-- }); -->
+					<!-- } -->
+					<!-- return data; -->
+				<!-- }()) -->
+				data: (function () {
+					// generate an array of random data
+					var data = [],
+						time = (new Date()).getTime(),
+						i;
+					for (i = -19; i <= 0; i += 1) {
+						data.push({
+							x: time + i * 1000,
+							y: Math.random()
+						});
+					}
+					return data;
+				}())
+			}]
+		}, function (c) {
+			// activeLastPointToolip(c)
+		});
+	});
+</script>
+</body>
+</html>

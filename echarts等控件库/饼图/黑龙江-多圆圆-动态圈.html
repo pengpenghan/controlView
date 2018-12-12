@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>demo</title>
+	<style type="text/css">
+	body,html{
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	}
+	.bg{
+		position: relative;
+		width: 100%;
+		height: 100%;
+		background-size: 100% 100%;
+		background-color:#122333;
+	}
+	.container{
+		color: #b6b6b6;
+		width: 50%;
+		height :50%;
+		position: relative;
+		top: 20%;
+		margin:auto;
+	}
+	.limited{
+		background: url("../images/s18.png") no-repeat;
+	}
+	.limited span{
+		margin:0 200px 0 154px;
+	}
+	.realTimePowerLimitedPower{
+		overflow: hidden;
+		margin:136px 0 0 0px;
+	}
+	.realTimePowerLimitedPower li{
+		float: left;
+		text-align: center;
+	}
+	.realTimePowerLimitedPower li:nth-child(1){
+		margin-right: 32px;
+	}
+	.realTimePowerLimitedPower li .echartWrapper{
+
+	}
+	.realTimePowerLimitedPower li span{
+		display: block;
+		font-size: 69px;
+		color: #93a5b5;
+		margin-top: 50px;
+	}
+	.realTimePowerLimitedPower li em{
+		font-size: 82px;
+		color: #fef018;
+	}
+	.realTimePowerLimitedPower li span.irs3880{
+		font-size:40px;
+	}
+	.realTimePowerLimitedPower li em.irsem3880{
+		font-size: 72px;
+	}
+	.realTimePowerLimitedPower li .echartWrapper .rotate{
+		width:280px;
+		height:280px;
+		position: absolute;
+		left:0;
+		top:0;
+		background: url("../images/s20.png") no-repeat;
+		background-size: 100% 100%;
+	}
+	.realTimePowerLimitedPower li .echartWrapper .rotate1{
+		background: url("../images/s21.png") no-repeat;
+		background-size: 100% 100%;
+	}
+	.realTimePowerLimitedPower li .echartWrapper .echart{
+		width: 110px;
+		height: 110px;
+		left: 85px;
+		top: 85px;
+		position: absolute;
+	}
+	</style>
+</head>
+<body>
+	<div class="bg">
+		<div class="container" id="container">
+			<ul class="realTimePowerLimitedPower" 
+						style="position:relative;
+								left:0px;">
+				<li>
+					<div class="echartWrapper"
+						style="position: relative; 
+						width: 280px;
+						 height: 280px; 
+						 background: url('../images/s19.png');
+						 background-size:100% 100%;">
+						 <div class="rotate"></div>
+						<div class="echart" id="echart05"></div>
+					</div>
+					<span class="irs3880">指令响应率</span>
+					<em id="instruction_response_rate" class="irsEm3880"></em>
+				</li>
+				<li>
+					<div class="echartWrapper"
+						style="position: relative; 
+								width: 280px; 
+								height: 280px; 
+								background: url('../images/s22.png');
+								background-size:100% 100%;">
+						<div class="rotate rotate1"></div>
+						<div class="echart" id="echart06"></div>
+					</div>
+					<span class="irs3880">AGC投运率</span>
+					<em id="agc_delivery_rate" class="irsEm3880"></em>
+				</li>
+			</ul>
+		</div>
+	</div>
+<script type="text/javascript" src="../js/jquery-3.1.0.min.js"></script>
+<script type="text/javascript" src="../js/echarts/echarts.min.js"></script>
+<script type="text/javascript" src="../js/highcharts/highcharts.js"></script>
+<script type="text/javascript">
+	$(function () {
+		/*2D旋转效果*/
+		var deg=0;
+		setInterval(rotate,10);
+		function rotate(){
+			deg++;
+			$(".rotate").css("transform","rotate("+deg+"deg)");
+		}
+		
+		var e05 = echarts.init(document.getElementById('echart05'),'');
+		var e06 = echarts.init(document.getElementById('echart06'),'');
+
+		option05 = {
+			tooltip: {
+				trigger: 'item',
+				formatter: "{b}<br/>{c} ({d}%)"
+			},
+			series: [{
+				type: 'pie',
+				radius: '100%',
+				center: ['50%', '50%'],
+				clockwise: false,
+				hoverAnimation: false,
+				data: [{
+					name:'指令响应率',
+					value: '89.4',
+					itemStyle: {
+						normal: {
+							"color": new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+								"offset": 0,
+								"color": '#a4eb6d'
+							}, {
+								"offset": 1,
+								"color": '#56c06d'
+							}]),
+							label: {
+								show: false
+							},
+							labelLine: {
+								show: false
+							}
+						}
+					}
+				},{
+					name:'指令响应率',
+					value: '10.6',
+					itemStyle: {
+						normal: {
+							color: '#232325',
+							label: {
+								show: false
+							},
+							labelLine: {
+								show: false
+							}
+						}
+					}
+				}],
+				label: {
+					normal: {
+						show: false
+					}
+				},
+				labelLine: {
+					normal: {
+						show: false
+					}
+				}
+			}]
+		};
+
+		option06 = {
+			tooltip: {
+				trigger: 'item',
+				formatter: "{b} <br/>{c} ({d}%)"
+			},
+			series: [{
+				type: 'pie',
+				radius: '100%',
+				center: ['50%', '50%'],
+				clockwise: false,
+				hoverAnimation: false,
+				data: [{
+					name:'AGC投运率',
+					value: '72.3',
+					itemStyle: {
+						normal: {
+							"color": new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+								"offset": 0,
+								"color": '#8549ed'
+							}, {
+								"offset": 1,
+								"color": '#3e3aed'
+							}]),
+							label: {
+								show: false
+							},
+							labelLine: {
+								show: false
+							}
+						}
+					}
+				},{
+					name:'AGC投运率',
+					value: '27.7',
+					itemStyle: {
+						normal: {
+							color: '#232325',
+							label: {
+								show: false
+							},
+							labelLine: {
+								show: false
+							}
+						}
+					}
+				}],
+				label: {
+					normal: {
+						show: false
+					}
+				},
+				labelLine: {
+					normal: {
+						show: false
+					}
+				}
+			}]
+		};
+
+		e05.setOption(option05,true);
+		e06.setOption(option06,true);
+		window.addEventListener("resize",function(){
+			e05.resize();
+			e06.resize();
+		});
+	});
+</script>
+</body>
+</html>

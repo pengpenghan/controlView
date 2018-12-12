@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>demo</title>
+	<style type="text/css">
+	body,html{
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	}
+	.bg{
+		position: relative;
+		width: 100%;
+		height: 100%;
+		background-size: 100% 100%;
+		background-color:#122333;
+	}
+	.container{
+		color: #b6b6b6;
+		width: 50%;
+		height :50%;
+		position: relative;
+		top: 20%;
+		margin:auto;
+	}
+	</style>
+</head>
+<body>
+	<div class="bg">
+		<div class="container" id="container">
+			
+		</div>
+	</div>
+<script type="text/javascript" src="../js/jquery-3.1.0.min.js"></script>
+<script type="text/javascript" src="../js/echarts/echarts.min.js"></script>
+<script type="text/javascript" src="../js/highcharts/highcharts.js"></script>
+<script type="text/javascript">
+	$(function () {
+		var datas = [
+			{name : '机械性能下降或丧失',value:28.57},
+			{name : '绝缘性能裂化',value:28.57},
+			{name : '附件/二次系统故障',value:42.86},
+		];
+		var option = {
+		    color:['#FA83B0','#8AEC0B','#E8B52B','#1EA3E1'],
+		    noDataLoadingOption:{
+		    	text :"No data to display.",
+		    	   	effect : 'bubble',
+		    	   	effectOption:{
+		    	   	backgroundColor:'rgba(255,255,255,0)',
+		    	   	effect: {
+		    	   		n: 0
+		    	   	}
+		    	}
+		    },
+			series: [
+ 		        {
+ 		            name:'事故原因',
+ 		            type:'pie',
+ 		            radius: [0, '100%'],
+ 		            itemStyle : {
+ 						normal : {
+ 							label : {
+ 								textStyle : {
+ 									color: '#E1E4E8',
+ 									fontFamily : '微软雅黑',
+ 									fontSize : 16,
+ 									fontWeight : 'normal'
+ 								},
+ 								formatter: '{b}\n{d}%'
+ 							},
+ 							labelLine : {
+ 								length :40,
+ 								lineStyle : {
+ 									color : '#fff'
+ 								}
+ 							},
+ 							borderColor : '#000',
+ 						}
+ 					},
+ 		            data:datas
+ 		        },
+				{
+ 		            type:'pie',
+ 		            radius: [0, '80%'],
+ 		            itemStyle : {
+ 						normal : {
+ 							color: 'rgba(3,18,45,0.7)',
+ 							label : {
+ 								show : false,
+ 							},
+ 							labelLine : {
+ 								show : false,
+ 							},
+ 							borderColor : '#000',
+ 						}
+ 					},
+ 		            data:[{name:'',value:360}]
+ 		        },
+ 		    ]
+		};
+		var container = echarts.init(document.getElementById("container"),'');
+		container.setOption(option,true);
+		window.addEventListener("resize",function(){
+			myChart.resize();
+		});
+	});
+</script>
+</body>
+</html>

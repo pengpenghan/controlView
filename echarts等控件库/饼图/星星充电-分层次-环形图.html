@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>demo</title>
+	<style type="text/css">
+	body,html{
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	}
+	.bg{
+		position: relative;
+		width: 100%;
+		height: 100%;
+		background-size: 100% 100%;
+		background-color:#122333;
+	}
+	.container{
+		color: #b6b6b6;
+		width: 50%;
+		height :50%;
+		position: relative;
+		top: 20%;
+		margin:auto;
+	}
+	</style>
+</head>
+<body>
+	<div class="bg">
+		<div class="container" id="container">
+			
+		</div>
+	</div>
+<script type="text/javascript" src="../js/jquery-3.1.0.min.js"></script>
+<script type="text/javascript" src="../js/echarts/echarts.min.js"></script>
+<script type="text/javascript" src="../js/highcharts/highcharts.js"></script>
+<script type="text/javascript">
+	$(function () {
+		//obj = obj.sort(sortBy('value',true,parseInt));
+		/**
+		 * 正序 通过value值对数组进行排序
+		 */
+		var sortBy=function (filed,rev,primer){
+			rev = (rev) ? -1 : 1;
+			return function (a, b) {
+				a = a[filed];
+				b = b[filed];
+				if (typeof (primer) != 'undefined') {
+					a = primer(a);
+					b = primer(b);
+				}
+				if (a < b) { return rev * -1; }
+				if (a > b) { return rev * 1; }
+				return 1;
+			}
+		};
+		var option = {
+			tooltip : {
+				trigger : 'item',
+				axisPointer : { // 坐标轴指示器，坐标轴触发有效
+					type : 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+				},
+				borderColor : '#43845D',
+				borderWidth : 1,
+				backgroundColor : 'rgba(11,42,89,0.3)',
+				formatter : "{a} <br/>{b} : {c} ({d}%)"
+			},
+			calculable : true,
+			series : [{
+				name : '充电频次占比',
+				type : 'pie',
+				startAngle : 120,
+				radius : ['50%', '80%'],
+				center : ['50%', '50%'],
+				roseType : 'area',
+				data : [
+						{
+							value : 53216,
+							name : '15+天',
+							itemStyle : {
+								normal : {
+									color : new echarts.graphic.LinearGradient(0,
+											0, 0, 1, [{
+												offset : 0,
+												color : "rgba(21,221,193,1)"
+											}, {
+												offset : 1,
+												color : "rgba(21,221,193,1)"
+											}]),
+									shadowBlur : 20,
+									shadowColor : "rgba(0, 0, 0, 0.5)"
+								}
+							}
+						},
+						{
+							value : 42014,
+							name : '8~15天',
+							labelLine : {
+								normal : {
+									lineStyle : {
+										color : 'rgba(0,188,189, 0.2)'
+									},
+									smooth : 0.2,
+									length : -5,
+									length2 : 0
+								}
+							},
+							itemStyle : {
+								normal : {
+									color : new echarts.graphic.LinearGradient(0,
+											0, 0, 1, [{
+												offset : 0,
+												color : "rgba(0,188,189,1)"
+											}, {
+												offset : 1,
+												color : "rgba(0,188,189,1)"
+											}]),
+									shadowBlur : 20,
+									shadowColor : "rgba(0, 0, 0, 0.5)"
+								}
+							}
+						},
+						{
+							value : 41710,
+							name : '4~7天',
+							itemStyle : {
+								normal : {
+									color : new echarts.graphic.LinearGradient(0,
+											0, 0, 1, [{
+												offset : 0,
+												color : "rgba(59,128,169,1)"
+											}, {
+												offset : 1,
+												color : "rgba(59,128,169,1)"
+											}]),
+									shadowBlur : 20,
+									shadowColor : "rgba(0, 0, 0, 0.5)"
+								}
+							}
+						},
+						{
+							value : 37076,
+							name : '2~3天',
+							itemStyle : {
+								normal : {
+									color : new echarts.graphic.LinearGradient(0,
+											0, 0, 1, [{
+												offset : 0,
+												color : "rgba(65,78,174,1)"
+											}, {
+												offset : 1,
+												color : "rgba(65,78,174,1)"
+											}]),
+									shadowBlur : 20,
+									shadowColor : "rgba(0, 0, 0, 0.5)"
+								}
+							}
+						},
+						{
+							value : 11812,
+							name : '1天',
+							itemStyle : {
+								normal : {
+									color : new echarts.graphic.LinearGradient(0,
+											0, 0, 1, [{
+												offset : 0,
+												color : "rgba(129,75,186,1)"
+											}, {
+												offset : 1,
+												color : "rgba(129,75,186,1)"
+											}]),
+									shadowBlur : 20,
+									shadowColor : "rgba(0, 0, 0, 0.5)"
+								}
+							}
+						}].sort(function(a, b) {
+					return -(a.value - b.value);
+				}),
+				roseType : 'radius',
+				label : {
+					normal : {
+						textStyle : {
+							color : '#748193',
+							fontSize : 20
+						}
+					}
+				},
+				labelLine : {
+					normal : {
+						lineStyle : {
+							color : 'rgba(18,74,175, 0.2)'
+						},
+						smooth : 0.2,
+						length : 5,
+						length2 : 5
+					}
+				},
+				animationType : 'scale',
+				animationEasing : 'elasticOut',
+				animationDelay : function(idx) {
+					return Math.random() * 200;
+				}
+			}]
+		};
+		var container = echarts.init(document.getElementById("container"),'');
+		container.setOption(option,true);
+		window.addEventListener("resize",function(){
+			myChart.resize();
+		});
+	});
+</script>
+</body>
+</html>

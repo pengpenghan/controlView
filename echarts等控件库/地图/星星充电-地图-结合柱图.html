@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>demo</title>
+	<style type="text/css">
+	body,html{
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	}
+	.bg{
+		position: relative;
+		width: 100%;
+		height: 100%;
+		background-size: 100% 100%;
+		background-color:#122333;
+	}
+	.container{
+		color: #b6b6b6;
+		width: 50%;
+		height :80%;
+		position: relative;
+		top: 5%;
+		margin:auto;
+	}
+	</style>
+</head>
+<body>
+	<div class="bg">
+		<div class="container" id="city_map">
+			
+		</div>
+	</div>
+<script type="text/javascript" src="../js/jquery-3.1.0.min.js"></script>
+<script type="text/javascript" src="../js/public.js"></script>
+<script type="text/javascript">
+	$(function () {
+		var data = new Array();
+		data.push(["山东省", "4462", "1759", "117.022", "36.6674"]);
+		data.push(["甘肃省", "2350", "916", "103.836", "36.0606"]);
+		data.push(["江苏省", "19188", "7480", "118.766", "32.0656"]);
+		data.push(["北京", "13608", "5225", "116.409", "39.9046"]);
+		data.push(["云南省", "3074", "1201", "102.713", "25.0437"]);
+		data.push(["海南省", "1368", "526", "110.352", "20.0178"]);
+		data.push(["浙江省", "17248", "6697", "120.155", "30.2656"]);
+		data.push(["上海", "17506", "6829", "121.474", "31.2333"]);
+		data.push(["天津", "12890", "5120", "117.205", "39.1275"]);
+		data.push(["陕西省", "44540", "17160", "108.957", "34.2649"]);
+		data.push(["新疆维吾尔自治区", "0", "0", "87.6134", "43.7933"]);
+		data.push(["贵州省", "960", "381", "106.708", "26.5977"]);
+		data.push(["安徽省", "12702", "4874", "117.286", "31.8596"]);
+		data.push(["澳门特别行政区", "0", "0", "113.543", "22.1868"]);
+		data.push(["湖南省", "23604", "9040", "112.986", "28.1113"]);
+		data.push(["河北省", "2338", "917", "114.517", "38.041"]);
+		data.push(["香港", "0", "0", "114.166", "22.2753"]);
+		data.push(["辽宁省", "404", "161", "123.427", "41.8355"]);
+		data.push(["四川省", "15374", "6058", "104.131", "30.6269"]);
+		data.push(["宁夏回族自治区", "14", "5", "106.259", "38.4711"]);
+		data.push(["吉林省", "296", "116", "125.328", "43.8951"]);
+		data.push(["福建省", "10150", "4035", "119.299", "26.0973"]);
+		data.push(["湖北省", "17056", "6797", "114.342", "30.5441"]);
+		data.push(["广东省", "33814", "13406", "113.268", "23.1328"]);
+		data.push(["重庆", "1934", "758", "106.577", "29.5575"]);
+		data.push(["山西省", "22956", "9015", "112.489", "37.8303"]);
+		data.push(["江西省", "11804", "4540", "115.909", "28.6724"]);
+		data.push(["黑龙江省", "120", "47", "126.659", "45.7356"]);
+		data.push(["青海省", "14", "6", "101.78", "36.6212"]);
+		data.push(["河南省", "11396", "4332", "113.755", "34.7619"]);
+		data.push(["台湾省", "0", "0", "120.966", "23.7977"]);
+		data.push(["内蒙古自治区", "776", "301", "111.765", "40.5091"]);
+		data.push(["西藏自治区", "0", "0", "91.5592", "29.486"]);
+		data.push(["广西壮族自治区", "1040", "400", "108.328", "22.8184"]);
+		cityMap("china", data);// 地图
+	});
+	function cityMap(mapName,datas) {
+		var top = '4%', left = '5%', left1 = '5%', top1 = '5.5%';
+		var width = '90%', height = '84%';
+		var colorarr = [ '#577CF8', 'rgba(5,17,41,0.5)'];
+		var city_map = echarts.init(document.getElementById("city_map"), '');
+		/*数据处理*/
+		var date = new Date();
+		var num = date.getHours();
+		var option = {
+			baseOption:{
+				timeline: {
+					axisType: 'category',
+					autoPlay: false,//是否自动播放
+					currentIndex : num,//固定那个点
+					playInterval: 1000,//ms
+					left:'0%',
+					right:'0%',
+					top:'90%',
+					symbol:'circle',
+					symbolSize:12,
+					checkpointStyle:{
+						symbol:'image://..//images//circle.png',
+						symbolSize:40,
+					},
+					lineStyle:{
+						color:'#454F76',
+						width:3
+					},
+					label:{
+						normal:{
+							color:'#8EAFDA',
+							fontSize:16,
+							padding: [0,20,-20,20],
+						},
+						emphasis:{
+							color:'#AED2FF',
+							fontSize:16
+						}
+					},
+					data: [
+						'00:00','01:00','02:00','03:00','04:00','05:00','06:00','07:00','08:00','09:00','10:00','11:00','12:00',
+						'13:00','14:00','15:00','16:00','17:00','18:00','19:00','20:00','21:00','22:00','23:00'
+					],
+				},
+				calculable : true,
+				title : {
+					x : 'center',
+					text : '',
+					textStyle : {
+						color : '#fff',
+						fontSize : 16
+					}
+				},
+	//			tooltip: {
+	//			    trigger: 'axis',
+	//			    show : 'false'
+	//			},
+				geo : [{
+					map : mapName,
+					roam : false,
+					regions : [{
+						name : '南海诸岛',
+						value : 0,
+						itemStyle : {
+							normal : {
+								opacity : 0,
+								label : {
+									show : false
+								}
+							}
+						}
+					}],
+					aspectScale : 0.6,// 将地图拉扁
+					width : width,
+					height : height,
+					left : left,
+					top : top,
+					z : 100,
+					label : {
+						normal : {
+							show : false
+						},
+						emphasis : {
+							show : true,
+							color : '#0A141B',
+							fontSize : 20
+						}
+					},
+					itemStyle : {
+						normal : {
+							areaColor : '#1C3464',
+							borderColor : 'rgba(124,182,235,0.5)',
+							borderWidth : 2
+						},
+						emphasis : {
+							show : true,
+							borderWidth : 3,
+							borderColor : '#3A82B2',
+							areaColor : '#46d99f',
+							label : {
+								show : false,
+								color : 'red',
+								fontSize : 40
+							}
+						}
+					}
+				},{
+					map : mapName,
+					roam : false,
+					regions : [{
+						name : '南海诸岛',
+						value : 0,
+						itemStyle : {
+							normal : {
+								// opacity : 0,
+								label : {
+									show : false
+								}
+							}
+						}
+					}],
+					aspectScale : 0.9,// 将地图拉扁
+					width : width,
+					height : height,
+					z : -100,
+					left : left1,
+					top : top1,
+					silent : true,
+					itemStyle : {
+						normal : {
+							areaColor : 'rgba(6,48,101,0.3)',
+							borderColor : '#4988CD',
+							borderWidth : 2
+						},
+						emphasis : {
+							show : false,
+							borderWidth : 3,
+							borderColor : '#3A82B2',
+							areaColor : '#46d99f',
+							label : {
+								shadowColor : '#fff', // 默认透明
+								shadowBlur : 10,
+								show : false
+							}
+						}
+					}
+				}],
+				series: []
+			},
+			options: []
+		};
+		city_map.setOption(option,true);
+		var options = {
+				tooltip:[],
+				legend:[],
+				xAxis : [],
+				yAxis : [],
+				grid : [],
+				series : []
+			};
+		var currentPower = 0;//当前功率
+		var res = [];
+		$.each(datas,function(i,data){
+			var value_total = data[1] == null ? 0 : parseFloat(data[1]);
+			var value = data[2] == null ? 0 : parseFloat(data[2]);
+			var lg = data[3] == null ? 0 : parseFloat(data[3]);//经度
+			var lt = data[4] == null ? 0 : parseFloat(data[4]);//纬度
+			currentPower = currentPower + value;
+			res.push({
+				name : data[0],
+				value : [value,value_total-value],
+				coords : [lg,lt]
+			});
+		});
+		$('#currentPower').text(currentPower == 0 ? 0 : currentPower.toLocaleString());
+		
+		echarts.util.each(res, function(dataItem, idx) {
+			var geoCoord = dataItem.coords;
+			var coord = city_map.convertToPixel('geo', geoCoord);
+			idx += '';
+			options.xAxis.push({
+				id : idx,
+				gridId : idx,
+				type : 'category',
+				z : 101,
+				splitLine : {
+					show : false
+				},
+				axisTick : {
+					show : false
+				},
+				axisLabel : {
+					show : false
+				},
+				axisLine : {
+					show : false,
+					lineStyle : {
+						color : '#bbb'
+					}
+				},
+				data : [ dataItem.name ],
+			});
+			options.yAxis.push({
+				id : idx,
+				gridId : idx,
+				z : 101,
+				show : false
+			});
+			options.grid.push({
+				id : idx,
+				width : 30,
+				height : 80,
+				left : coord[0] - 15,
+				top : coord[1] - 35,
+			});
+
+			options.series.push({
+				name : dataItem.name,
+				type : 'bar',
+				stack : 'bar' + idx,
+				xAxisId : idx,
+				yAxisId : idx,
+				barWidth: 20,
+				z : 101,
+				label:{
+					normal:{
+						show : true,
+						formatter : ['{a|{b}}', '{b|{c}kW}'].join('\n'),
+						rich : {
+							a : {
+								color : '#FFFFFF',
+								textBorderColor: '#040B17',
+								textBorderWidth: 2,
+								fontSize : 12,
+								fontWeight : 'bold',
+								height : 14,
+							},
+							b : {
+								color : '#54E5FF',
+								textBorderColor: '#040B17',
+								textBorderWidth: 2,
+								fontWeight : 'bold',
+								fontSize : 14,
+								height : 19,
+								width : 40,
+								padding: [0, 100, 0, 0],
+								align : 'left'
+							}
+						}
+					}
+				},
+				itemStyle : {
+					normal : {
+						color : colorarr[0],
+						borderColor : '#577CF8',
+						borderWidth : 2,
+						barBorderRadius: [0, 0, 0, 0] //（顺时针左上，右上，右下，左下）
+					}
+				},
+				data : [ dataItem.value[0] ]
+			});
+			options.series.push({
+				name : dataItem.name,
+				type : 'bar',
+				stack : 'bar' + idx,
+				xAxisId : idx,
+				yAxisId : idx,
+				barWidth: 35,
+				z : 101,
+				label:{
+					normal:{
+						show : false
+					}
+				},
+				itemStyle : {
+					normal : {
+						color : colorarr[1],
+						borderColor : '#577CF8',
+						borderWidth : 2,
+						barBorderRadius: [5, 5, 0, 0] //（顺时针左上，右上，右下，左下）
+					}
+				},
+				data : [ dataItem.value[1] ]
+			});
+		});
+		city_map.setOption(options);
+	}
+	window.addEventListener("resize",function(){
+		myChart.resize();
+	});
+</script>
+</body>
+</html>

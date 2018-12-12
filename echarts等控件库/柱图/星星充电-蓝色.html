@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>demo</title>
+	<style type="text/css">
+	body,html{
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	}
+	.bg{
+		position: relative;
+		width: 100%;
+		height: 100%;
+		background-size: 100% 100%;
+		background-color:#122333;
+	}
+	.container{
+		color: #b6b6b6;
+		width: 50%;
+		height :50%;
+		position: relative;
+		top: 20%;
+		margin:auto;
+	}
+	</style>
+</head>
+<body>
+	<div class="bg">
+		<div class="container" id="container">
+			
+		</div>
+	</div>
+<script type="text/javascript" src="../js/jquery-3.1.0.min.js"></script>
+<script type="text/javascript" src="../js/echarts/echarts.min.js"></script>
+<script type="text/javascript" src="../js/highcharts/highcharts.js"></script>
+<script type="text/javascript">
+	$(function(){
+		var option = {
+			color: ['#3398DB'],
+			tooltip: {
+				trigger: 'axis',
+				axisPointer: { // 坐标轴指示器，坐标轴触发有效
+					type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+				}
+			},
+			grid: {
+				left: '3%',
+				right: '4%',
+				bottom: '3%',
+				containLabel: true
+			},
+			legend:{
+				show: true,
+				itemWidth: 20,
+				itemHeight: 8,
+				textStyle: {
+					color:'rgba(1,139,188)',
+					fontSize: 18
+				},
+				x: 'right',
+				align: 'left',
+				data:['充电量']
+			},
+			xAxis: [{
+				type: 'category',
+				data: ['北京', '广东', '浙江', '江苏', '上海', '天津', '山东',
+					'福建', '四川', '辽宁', '安徽', '重庆', '湖南', '河北', '湖北'
+				],
+				axisTick: {
+					alignWithLabel: true,
+					lineStyle:{
+						color:'#018BBC'
+					}
+				},
+				axisLine: {
+					lineStyle: {
+						color: 'rgba(1,139,188,0.5)',
+						width: 2
+					}
+				},
+				axisLabel: {
+					color: '#018BBC',
+					fontSize: 18
+				},
+			}],
+			yAxis: [{
+				name: '单位（kW.h）',
+				nameTextStyle: {
+					color: '#018BBC',
+					fontSize: 18
+				},
+				axisTick: {
+					show: false,
+					alignWithLabel: true
+				},
+				axisLabel: {
+					color: '#018BBC',
+					fontSize: 18
+				},
+				axisLine: {
+					lineStyle: {
+						color: 'rgba(1,139,188,0.5)',
+						width: 2
+					}
+				},
+				splitLine: {
+					lineStyle: {
+						color: 'rgba(1,139,188,0.5)',
+						width: 2
+					}
+				}
+			}],
+			series: [{
+					name: '充电量',
+					type: 'bar',
+					barWidth: '40%',
+					label: {
+						normal: {
+							show: true,
+							position: 'top',
+							formatter: '{c}%',
+							color:'#018BBC',
+							fontSize:18
+						}
+					},
+					itemStyle: {
+						normal: {
+							color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+								offset: 0,
+								color: 'rgba(1,139,188, 1)'
+							}, {
+								offset: 1,
+								color: 'rgba(1,139,188, 0.3)'
+							}]),
+							borderColor:'rgba(1,139,188,0.8)',
+							borderWidth: 2
+						}
+					},
+					data: [38,37,35,35,33,32,31,31,31,31,29,28,27,24,22]
+				}
+			]
+		};
+		var container = echarts.init(document.getElementById("container"),'');
+		container.setOption(option,true);
+	});
+</script>
+</body>
+</html>

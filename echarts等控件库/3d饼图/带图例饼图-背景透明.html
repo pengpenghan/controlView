@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>demo</title>
+	<style type="text/css">
+	body,html{
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	}
+	.bg{
+		position: relative;
+		width: 100%;
+		height: 100%;
+		background-size: 100% 100%;
+		background-color:#122333;
+	}
+	.container{
+		color: #b6b6b6;
+		width: 50%;
+		height :50%;
+		background-color: #122333;
+		position: relative;
+		top: 20%;
+		margin:auto;
+	}
+	</style>
+</head>
+<body>
+	<div class="bg">
+		<div class="container" id="container">
+			
+		</div>
+	</div>
+<script type="text/javascript" src="../js/jquery-3.1.0.min.js"></script>
+<script type="text/javascript" src="../js/fusioncharts/fusioncharts.js"></script>
+<script type="text/javascript">
+	$(function () {
+		FusionCharts.ready(function () {
+          var charts = new FusionCharts({
+              type: 'pie3d',
+              renderAt: 'container',
+              width: '100%',
+              height: '100%',
+              dataFormat: 'json',
+              dataSource: {
+                "chart": {
+                "pieRadius":"60",//固定半径大小
+                "showValues":"1",//是否显示数值
+                "showPercentValues":"0",//是否显示百分比
+                "manageLabelOverflow":true,//当Label溢出时进行自动管理
+                "formatNumberScale":"0",//设置数据格式设置是否用“K”来代表千，“M”来代表百万
+                "showLabels":"0",//设置是否显示标签
+				"labelDistance":"-180",
+                "showPercentInToolTip":"1",
+                "showPercentValues":"0",
+                "baseFontColor":"#fff",
+                "caption": "",
+                "subCaption": "",
+                "paletteColors": "#0075c2,#1aaf5d,#f2c500,#f45b00,#8e0000",
+                "bgAlpha":"0",
+				"canvasBgAlpha":"0",
+                "showBorder": "0",
+                "use3DLighting": "0",
+                "showShadow": "0",
+                "enableSmartLabels": "0",
+                "startingAngle": "0",
+                "showPercentValues": "1",
+                "showPercentInTooltip": "0",
+                "decimals": "2",
+                "captionFontSize": "14",
+                "subcaptionFontSize": "14",
+                "subcaptionFontBold": "0",
+                "toolTipColor": "#ffffff",
+                "toolTipBorderThickness": "0",
+                "toolTipBgColor": "#000000",
+                "toolTipBgAlpha": "80",
+                "toolTipBorderRadius": "2",
+                "toolTipPadding": "5",
+                "showHoverEffect":"1",
+                "showLegend": "1",//是否显示图例0不显示1显示
+                "legendAllowDrag": "1",//可以拖动图例
+                //"legendPosition": "RIGHT",//图例位置
+                "legendBgAlpha":"0",//图例背景透明
+                "legendIconScale":"0",//图例规模大小
+                "reverseLegend":"1",
+                "legendBgColor": "#ffffff",
+                "legendBorderAlpha": '0',
+                "legendShadow": '0',
+                "legendItemFontSize": '8',
+                "legendItemFontColor": '#fff'
+              },
+                "data": [
+                  {
+                    "label": "第一季度",
+                    "value": "255040"
+                  },
+                  {
+                    "label": "第二季度",
+                    "value": "689545"
+                  },
+                  {
+                    "label": "第三季度",
+                    "value": "784595"
+                  },
+                  {
+                    "label": "第四季度",
+                    "value": "325848"
+                  }
+                ]
+              }
+            });
+        charts.setTransparent();//背景透明   设置上这个
+        charts.render(); 
+        });
+	});
+</script>
+</body>
+</html>

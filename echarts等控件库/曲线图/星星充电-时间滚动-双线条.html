@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>demo</title>
+	<style type="text/css">
+	body,html{
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	}
+	.bg{
+		position: relative;
+		width: 100%;
+		height: 100%;
+		background-size: 100% 100%;
+		background-color:#122333;
+	}
+	.container{
+		color: #b6b6b6;
+		width: 50%;
+		height :50%;
+		position: relative;
+		top: 20%;
+		margin:auto;
+	}
+	</style>
+</head>
+<body>
+	<div class="bg">
+		<div class="container" id="container">
+			
+		</div>
+	</div>
+<script type="text/javascript" src="../js/jquery-3.1.0.min.js"></script>
+<script type="text/javascript" src="../js/echarts/echarts.min.js"></script>
+<script type="text/javascript" src="../js/highcharts/highcharts.js"></script>
+<script type="text/javascript">
+	$(function(){
+		Highcharts.setOptions({
+			global: {
+				useUTC: false
+			}
+		});
+		function activeLastPointToolip(chart) {
+			var points = chart.series[0].points;
+			chart.tooltip.refresh(points[points.length -1]);
+		}
+		$('#container').highcharts({
+			credits: {
+				enabled: false
+			},
+			chart: {
+				type: 'spline',
+				backgroundColor: 'rgba(0,0,0,0)',
+				marginTop: 60,
+				animation: Highcharts.svg, // don't animate in old IE
+				marginLeft: 80,
+				marginRight: 10,
+				marginBottom: 60,
+				events: {
+					load: function () {
+						// set up the updating of the chart each second
+						var series = this.series[0],
+							chart = this;
+						var series1 = this.series[1],
+							chart1 = this;
+						setInterval(function () {
+							var x = (new Date()).getTime(), // current time
+								y = Math.random();
+							var x1 = (new Date()).getTime(), // current time
+								y1 = Math.random();
+							series.addPoint([x, y], true, true);
+							series1.addPoint([x1, y1], true, true);
+							activeLastPointToolip(chart);
+							activeLastPointToolip(chart1);
+						}, 1000);
+					}
+				}
+			},
+			title: {
+				text: '动态模拟实时数据'
+			},
+			xAxis: {
+				type: 'datetime',
+				gridLineWidth : 0,
+				lineColor:'#4A6696',
+				lineWidth : 1,
+				tickWidth: 0,
+				gridLineColor : '#4A6696',
+				labels:{
+					y: 40,
+					enabled: true,
+					step : 1,
+					style:{
+						color : '#4A6696',
+						fontSize : 22,
+						fontFamily : '微软雅黑'
+					},
+					formatter: function () {
+						return Highcharts.dateFormat('%H:%M', this.value);
+					}
+				}
+			},
+			yAxis: {
+				lineColor:'#3C5F99',
+				lineWidth : 1.5,
+				gridLineWidth : 1,
+				gridLineColor : '#4A6696',
+				title: {
+					text: '单位（Hz）',
+					x: 130,
+					y: -30,
+					rotation : 0,
+					align: 'high',
+					style:{
+						color : '#4A6696',
+						fontSize : 18,
+						fontFamily : '微软雅黑'
+					}
+				},labels:{
+					style:{
+						color : '#4A6696',
+						fontSize : 22,
+						fontFamily : '微软雅黑'
+					}
+				},
+				plotLines: [{
+					color : '#1F3051',
+					width : 2
+				}]
+			},
+			tooltip: {
+				formatter: function () {
+					return '<b>' + this.series.name + '</b><br/>' +
+						Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' +
+						Highcharts.numberFormat(this.y, 2);
+				}
+			},
+			legend: {
+				enabled: false
+			},
+			exporting: {
+				enabled: false
+			},
+			series: [{
+				name: '充电次数',
+				color: '#0180E2',
+				lineWidth: 3,
+				lineColor: '#0180E2',
+				marker:{
+					radius : 0
+				},
+				data: (function () {
+					// generate an array of random data
+					var data = [],
+						time = (new Date()).getTime(),
+						i;
+					for (i = -19; i <= 0; i += 1) {
+						data.push({
+							x: time + i * 1000,
+							y: Math.random()
+						});
+					}
+					return data;
+				}())
+			},{
+				name: '充电中设备',
+				color: '#8C47B2',
+				lineWidth: 3,
+				lineColor: '#8C47B2',
+				marker:{
+					radius : 0
+				},
+				data: (function () {
+					// generate an array of random data
+					var data = [],
+						time = (new Date()).getTime(),
+						i;
+					for (i = -19; i <= 0; i += 1) {
+						data.push({
+							x: time + i * 1000,
+							y: Math.random()
+						});
+					}
+					return data;
+				}())
+			}]
+		}, function(c) {
+			activeLastPointToolip(c)
+		});
+	});
+</script>
+</body>
+</html>

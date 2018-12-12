@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>demo</title>
+	<style type="text/css">
+	body,html{
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	}
+	.bg{
+		position: relative;
+		width: 100%;
+		height: 100%;
+		background-size: 100% 100%;
+		background-color:#122333;
+	}
+	.container{
+		color: #b6b6b6;
+		width: 50%;
+		height :50%;
+		position: relative;
+		top: 20%;
+		margin:auto;
+	}
+	</style>
+</head>
+<body>
+	<div class="bg">
+		<div class="container" id="container">
+			
+		</div>
+	</div>
+<script type="text/javascript" src="../js/jquery-3.1.0.min.js"></script>
+<script type="text/javascript" src="../js/public.js"></script>
+<script type="text/javascript">
+	$(function () {
+		cityMap('全国','','','');
+	});
+	function cityMap(mapName,cityCode,operator,obj) {
+		var top = '9%', left = '5%', left1 = '5%', top1 = '11.5%';
+		var width = '90%', height = '90%';
+		if (mapName != '全国') {
+			top = '17%', left = '15%', left1 = '14.5%', top1 = '19%';
+			width = '70%', height = '80%';
+		}else{
+			mapName = 'china';
+		}
+		if (mapName == '河南') {
+			top = '9%', left = '8%', left1 = '7%', top1 = '12%';
+			width = '70%', height = '60%';
+		} else if (mapName == '甘肃') {
+			top = '36%', left = '32%', left1 = '31%', top1 = '38%';
+			width = '50%', height = '40%';
+		} else if (mapName == '四川') {
+			top = '24%', left = '22%', left1 = '21%', top1 = '26%';
+			width = '60%', height = '60%';
+		} else if (mapName == '黑龙江') {
+			top = '24%', left = '22%', left1 = '21%', top1 = '26%';
+			width = '60%', height = '60%';
+		}
+		var datas = [
+        {name: '济南市', value: [117.121225,36.66466,390]},
+        {name: '菏泽市', value: [115.480656,35.23375,230]},
+        {name: '德州市', value: [116.59,35.38,230]},
+        {name: '聊城市', value: [116.39,37.45,230]},
+        {name: '泰安市', value: [115.97,36.45,230]},
+        {name: '临沂市', value: [117.13,36.18,230]},
+        {name: '淄博市', value: [118.35,35.05,230]},
+        {name: '枣庄市', value: [118.05,36.78,230]},
+        {name: '滨州市', value: [117.57,34.86,230]},
+        {name: '潍坊市', value: [118.03,37.36,230]},
+        {name: '东营市', value: [119.1,36.62,230]},
+        {name: '青岛市', value: [118.49,37.46,230]},
+        {name: '烟台市', value: [120.3,36.62,230]},
+        {name: '威海市', value: [120.9,37.32,230]},
+        {name: '日照市', value: [122.1,37.2,230]},
+        {name: '济宁市', value: [119.1,35.62,230]},
+        {name: '莱芜市', value: [117.70,36.28,230]},
+    ];
+		var number = 0;
+
+		var container = echarts.init(document.getElementById("container"), '');
+		container.setOption({
+			animation: false,
+			title : {
+				x : 'center',
+				text : '',
+				textStyle : {
+					color : '#fff',
+					fontSize : 16
+				}
+			},
+			geo : [{
+				map : mapName,
+				roam : false,
+				regions : [{
+					name : '南海诸岛',
+					value : 0,
+					itemStyle : {
+						normal : {
+							opacity : 0,
+							label : {
+								show : false
+							}
+						}
+					}
+				}],
+				aspectScale : 0.9,// 将地图拉扁
+				width : width,
+				height : height,
+				left : left,
+				top : top,
+				z : 100,
+				label : {
+					normal : {
+						show : false
+					},
+					emphasis : {
+						show : true,
+						color : '#0A141B',
+						fontSize : 20
+					}
+				},
+				itemStyle : {
+					normal : {
+						areaColor : '#2e6bc6',
+						borderColor : 'rgba(124,182,235,0.5)',
+						borderWidth : 2
+					},
+					emphasis : {
+						show : true,
+						borderWidth : 3,
+						borderColor : '#fffb27',
+						areaColor : '#46d99f',
+						label : {
+							show : false,
+							color : 'red',
+							fontSize : 40
+						}
+					}
+				}
+			}, {
+				map : mapName,
+				roam : false,
+				regions : [{
+					name : '南海诸岛',
+					value : 0,
+					itemStyle : {
+						normal : {
+							opacity : 0,
+							label : {
+								show : false
+							}
+						}
+					}
+				}],
+				aspectScale : 0.9,// 将地图拉扁
+				width : width,
+				height : height,
+				z : -100,
+				left : left1,
+				top : top1,
+				silent : true,
+				itemStyle : {
+					normal : {
+						areaColor : 'rgba(6,48,101,0.3)',
+						borderColor : '#4988CD',
+						borderWidth : 2
+					},
+					emphasis : {
+						show : false,
+						borderWidth : 3,
+						borderColor : '#fffb27',
+						areaColor : '#46d99f',
+						label : {
+							shadowColor : '#fff', // 默认透明
+							shadowBlur : 10,
+							show : false
+						}
+					}
+				}
+			}],
+			series : [{
+				name : '定位点',
+				type : 'scatter', // 散点图
+				coordinateSystem : 'geo', // 使用地理坐标系
+				hoverAnimation : 'false',
+				legendHoverLink : 'false',
+				rippleEffect : {
+					period : 4,
+					brushType : 'stroke',
+					scale : 3
+				},
+				symbolSize: function(val) {
+					return Math.max(val[2] / 20, 8);
+				},
+				itemStyle:{
+					normal:{
+						color: '#00CD00'
+					}
+				},
+				data : datas,
+				zlevel : 1,
+			}]
+		});
+		window.addEventListener("resize",function(){
+			container.resize();
+		});
+		container.on('click', function(params) {
+			var city_name = params.name
+			if (city_name == '山东' || city_name == '安徽' || city_name == '澳门'
+					|| city_name == '北京' || city_name == '重庆' || city_name == '福建'
+					|| city_name == '甘肃' || city_name == '广东' || city_name == '广西'
+					|| city_name == '贵州' || city_name == '海南' || city_name == '河北'
+					|| city_name == '黑龙江' || city_name == '河南' || city_name == '湖北'
+					|| city_name == '湖南' || city_name == '江苏' || city_name == '江西'
+					|| city_name == '吉林' || city_name == '辽宁' || city_name == '内蒙古'
+					|| city_name == '宁夏' || city_name == '青海' || city_name == '山东'
+					|| city_name == '上海' || city_name == '山西' || city_name == '陕西'
+					|| city_name == '四川' || city_name == '天津' || city_name == '香港'
+					|| city_name == '新疆' || city_name == '西藏' || city_name == '云南'
+					|| city_name == '浙江' || city_name == '台湾') {
+				cityMap(city_name,'','');
+			}
+		});
+	}
+</script>
+</body>
+</html>

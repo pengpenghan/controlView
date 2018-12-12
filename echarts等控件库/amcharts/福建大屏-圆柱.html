@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>demo</title>
+	<style type="text/css">
+	body,html{
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	}
+	.bg{
+		position: relative;
+		width: 100%;
+		height: 100%;
+		background-size: 100% 100%;
+		background-color:#122333;
+	}
+	.container{
+		color: #b6b6b6;
+		width: 50%;
+		height :50%;
+		position: relative;
+		top: 20%;
+		margin:auto;
+	}
+	</style>
+</head>
+<body>
+	<div class="bg">
+		<div class="container" id="container">
+		</div>
+	</div>
+<script type="text/javascript" src="../js/jquery-3.1.0.min.js"></script>
+<script type="text/javascript" src="../js/echarts/echarts.min.js"></script>
+<script type="text/javascript" src="../js/highcharts/highcharts.js"></script>
+<script type="text/javascript" src="../js/amcharts/amcharts.js"></script>
+<script type="text/javascript" src="../js/amcharts/serial.js"></script>
+<script type="text/javascript">
+	$(function () {
+		var datas = [{
+			"country": "USA",
+			"visits": 4025,
+			"color": "#FF0F00"
+		}, {
+			"country": "China",
+			"visits": 1882,
+			"color": "#FF6600"
+		}, {
+			"country": "Japan",
+			"visits": 1809,
+			"color": "#FF9E01"
+		}, {
+			"country": "Germany",
+			"visits": 1322,
+			"color": "#FCD202"
+		}, {
+			"country": "UK",
+			"visits": 1122,
+			"color": "#F8FF01"
+		}, {
+			"country": "France",
+			"visits": 1114,
+			"color": "#B0DE09"
+		}, {
+			"country": "India",
+			"visits": 984,
+			"color": "#04D215"
+		}, {
+			"country": "Spain",
+			"visits": 711,
+			"color": "#0D8ECF"
+		}];
+		var chart = AmCharts.makeChart("container", {
+			"theme": "none",
+			"type": "serial",
+			"startDuration": 2,
+			//"rotate":true,//图表纵向设置
+			//"color":"",
+			"dataProvider":datas,
+			"valueAxes": [{  //y轴
+				"position": "left",
+				//"axisColor":'#FF51BD',
+				"axisAlpha":0,//y轴透明度
+				"gridAlpha":1,
+				"inside":false,
+				"gridColor":"#022E4E",
+				//"axisAlphaColor":'#022E4E',
+				"autoGridCount":false,
+				"gridThickness":0.3,
+			   /* "gridCount":6,
+				"includeAllValues":true,
+				"minmum":0,
+				"maxmum":6,*/
+				"color":'#9198A6'
+			}],
+			"graphs": [{
+				"balloonText": "[[category]]: <b>[[value]]个</b>",
+				"colorField": "color",
+				"fillAlphas": 1,
+				"lineAlpha": 0,
+				"type": "column",
+				/*"color":"#B98824",
+				"labelText": "[[value]]",//圆柱上显示数字及颜色设置
+	*/	        "columnWidth": 0.2,
+				"topRadius":1,//可以设置图例是圆柱还是矩形
+				//"showOnAxis":false,
+				"valueField": "visits",
+				"labelFunction": function(item) {
+					return Math.abs(item.values.value);
+				  },
+			}],
+			"depth3D": 40,
+			"angle": 30,
+			"chartCursor": {
+				"categoryBalloonEnabled": false,
+				"cursorAlpha": 0,
+				"zoomable": false
+			},    
+			"categoryField": "country",
+			"categoryAxis": {
+				"labelRotation":90,//文字倒置
+				//"labelOffset":44, //坐标轴与文字间的距离
+				"color": "#9198A6",
+				"gridPosition": "start",
+				"autoGridCount":false,//显示x轴全部信息
+				"axisColor":"#022E4E",
+				"autoWrap":true,
+				"ValueAxisLogarithmic":true,
+			},
+		},0);
+	});
+</script>
+</body>
+</html>

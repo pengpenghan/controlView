@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>demo</title>
+	<style type="text/css">
+	body,html{
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	}
+	.bg{
+		position: relative;
+		width: 100%;
+		height: 100%;
+		background-size: 100% 100%;
+		background-color:#122333;
+	}
+	.container{
+		color: #b6b6b6;
+		width: 50%;
+		height :50%;
+		position: relative;
+		top: 20%;
+		margin:auto;
+	}
+	</style>
+</head>
+<body>
+	<div class="bg">
+		<div class="container" id="container">
+			
+		</div>
+	</div>
+<script type="text/javascript" src="../js/jquery-3.1.0.min.js"></script>
+<script type="text/javascript" src="../js/echarts/echarts.min.js"></script>
+<script type="text/javascript" src="../js/highcharts/highcharts.js"></script>
+<script type="text/javascript">
+	$(function () {
+		function getData(rate,value, name) {
+			var total = 0;
+			if (value != 0) {
+				total = (value/rate*100).toFixed(2);
+			}
+			return [{
+				value : value,
+				name : name,
+			}, {
+				value : (total == 0 ? 100 : total - value),
+				label : {
+					normal : {
+						show : false
+					}
+				},
+				labelLine : {
+					normal : {
+						show : false,
+						length : 0,
+						length2 : 0,
+						lineStyle : {
+							color : 'rgba(0,0,0,0)'
+						}
+					}
+				},
+				tooltip : {
+					show : false
+				},
+				itemStyle : {
+					normal : {
+						color : 'transparent',
+						borderColor : 'rgba(31,58,101,0.2)',
+						shadowColor : 'rgba(0, 0, 0, 0.5)',
+						shadowBlur : 10
+					}
+				}
+			}];
+		}
+
+		function getLabelStyleH() {
+			return [{
+				normal : {
+					position : 'outer',
+					formatter : ['{a|{b}}', '{b|{c}}{c|({d}%)}'].join('\n'),
+					rich : {
+						a : {
+							color : '#8796AE',
+							fontSize : 15,
+							fontWeight : 'bold',
+							lineHeight : 20
+						},
+						b : {
+							color : '#BE4540',
+							fontSize : 15,
+							height : 19
+						},
+						c : {
+							color : '#8796AE',
+							fontSize : 15
+						}
+					}
+				}
+			}];
+		}
+		var option = {
+			backgroundColor : 'rgba(0,0,0,0)',
+			title : {
+				show : true,
+				text : '累计充电\n量组成',
+				textStyle : {
+					color : '#7489A4',
+					fontSize : 16
+				},
+				x : 'center',
+				y : 'center'
+			},
+			tooltip : {
+				axisPointer : { // 坐标轴指示器，坐标轴触发有效
+					type : 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+				},
+				borderColor : '#43845D',
+				borderWidth : 1,
+				backgroundColor : 'rgba(11,42,89,0.3)',
+				formatter : "{b} : {c} ({d}%)"
+			},
+			legend : {
+				show : false,
+				top : "25%",
+				left : "40%",
+				itemHeight : 18,
+				data : ['实勘率', '户型图比例', '钥匙率', '委托率', '经理陪看率'],
+				textStyle : {
+					color : '#fff'
+				},
+				selectedMode : true,
+				orient : "vertical",
+
+			},
+			series : [{
+				type : 'pie',
+				clockWise : true, // 顺时加载
+				hoverAnimation : false, // 鼠标移入变大
+				radius : ['20%', '25%'],
+				startAngle : 120,
+				label : getLabelStyleH()[0],
+				labelLine : {
+					normal : {
+						show : true,
+						length : 70,
+						length2 : 30,
+						lineStyle : {
+							color : '#919FAF'
+						}
+					}
+				},
+				itemStyle : {
+					normal : {
+						color : '#25397E',
+						borderColor : '#8B9BB3',
+						borderWidth : 1.5
+					}
+				},
+				data : getData(20,100, '共享电量')
+			}, {
+				type : 'pie',
+				clockWise : true, // 顺时加载
+				hoverAnimation : false, // 鼠标移入变大
+				radius : ['35%', '40%'],
+				startAngle : 260,
+				labelLine : {
+					normal : {
+						show : true,
+						length : 70,
+						length2 : 30,
+						lineStyle : {
+							color : '#919FAF'
+						}
+					}
+				},
+				label : getLabelStyleH()[0],
+				itemStyle : {
+					normal : {
+						color : '#1887BC',
+						borderColor : '#8B9BB3',
+						borderWidth : 1.5
+					}
+				},
+				data : getData(20,100, '白名单电量')
+			}, {
+				type : 'pie',
+				clockWise : true, // 顺时加载
+				hoverAnimation : false, // 鼠标移入变大
+				radius : ['50%', '55%'],
+				startAngle : 60,
+				labelLine : {
+					normal : {
+						show : true,
+						length : 70,
+						length2 : 30,
+						lineStyle : {
+							color : '#919FAF'
+						}
+					}
+				},
+				label : getLabelStyleH()[0],
+				itemStyle : {
+					normal : {
+						color : '#BE4540',
+						borderColor : '#8B9BB3',
+						borderWidth : 1.5
+					}
+				},
+				data : getData(20,100, '自用电量')
+			}, {
+				type : 'pie',
+				clockWise : true, // 顺时加载
+				hoverAnimation : false, // 鼠标移入变大
+				radius : ['0%', '70%'],
+				label : {
+					normal : {
+						show : false
+					}
+				},
+				labelLine : {
+					normal : {
+						show : false
+					}
+				},
+				itemStyle : {
+					normal : {
+						color : new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+							offset : 0,
+							color : '#1E3964'
+						}, {
+							offset : 0.2,
+							color : '#0A2141'
+						}, {
+							offset : 0.8,
+							color : '#0A2141'
+						}, {
+							offset : 1,
+							color : '#1E3964'
+						}]),
+						borderWidth : 0
+					}
+				},
+				z : -10,
+				tooltip : {
+					show : false
+				},
+				data : getData(100,100, '')
+			}]
+		};
+		var container = echarts.init(document.getElementById("container"),'');
+		container.setOption(option,true);
+		window.addEventListener("resize",function(){
+			myChart.resize();
+		});
+	});
+</script>
+</body>
+</html>

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>demo</title>
+	<style type="text/css">
+	body,html{
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	}
+	.bg{
+		position: relative;
+		width: 100%;
+		height: 100%;
+		background-size: 100% 100%;
+		background-color:#122333;
+	}
+	.container{
+		color: #b6b6b6;
+		width: 50%;
+		height :50%;
+		position: relative;
+		top: 20%;
+		margin:auto;
+	}
+	</style>
+</head>
+<body>
+	<div class="bg">
+		<div class="container" id="container">
+			
+		</div>
+	</div>
+<script type="text/javascript" src="../js/jquery-3.1.0.min.js"></script>
+<script type="text/javascript" src="../js/echarts/echarts.min.js"></script>
+<script type="text/javascript" src="../js/highcharts/highcharts.js"></script>
+<script type="text/javascript">
+	$(function () {
+		var datas = [
+			{name:'事故',y:23},
+			{name:'故障',y:45}
+		];
+		var chart = new Highcharts.Chart({
+		colors: ['#8AEC0B','#FFE84A'],
+		credits: {
+			enabled:false
+		},//去除官方链接
+		chart: {
+		    renderTo: 'container',
+		    type: 'pie',
+		    backgroundColor: 'rgba(255, 255, 255, 0)',  
+			plotBorderColor : null,  
+			plotBackgroundColor: null,  
+			plotBackgroundImage:null,  
+			plotBorderWidth: null,  
+			plotShadow: false, 
+			borderWidth : 0,  
+			x: 150,
+			y: 100,
+		},
+		title: {
+			text: ''
+		},
+		labels: {
+			items :{
+				style: {
+					color: 'red'
+				}
+			}
+		},
+		legend: {
+			  //layout: 'vertical',//图形上下布局
+			  //align: 'center',//图形水平位置
+			  verticalAlign: 'middle',//垂直位置
+			  reversed: true,
+			  padding: 5,
+			  //symbolRadius: 5,
+			  symbolPadding: 4,
+			  symbolWidth: 10,
+			  symbolHeight: 8,
+			  x: 0,
+			  y: -50,
+			  borderWidth: 0,
+			  labelFormatter: function() {
+				  return this.name+''+this.y;
+			  },
+			  itemStyle: {
+				  color: '#9BA0A9'
+			  }
+		  },
+		plotOptions: {
+			pie: {
+				  shadow: true,
+				  showInLegend: true,
+				  allowPointSelect: true,
+				  cursor: 'pointer',
+				  startAngle: -90,
+				  endAngle:90, 
+				  center: ['50%', '100%'], 
+				  innerSize:'60%',
+				  size:150,
+				  dataLabels: {
+					  enabled: true,
+					  color: '#fff',
+					  connectorPadding: 10,
+					  connectorColor: '#F7D611',
+					  connectorWidth:0,//引导线设置
+					  connectorPadding:0,
+					  distance:4,//百分数所在的位置
+					  formate:'<div>asdfasdfasdf</div>',
+					  formatter: function() {
+						//return Highcharts.numberFormat(this.y, 0, ',')+' %';
+						return  this.percentage.toFixed(2)+' %';
+					  },
+					  //style:{color:'red'}
+				  },
+			  },  
+		}, 
+		series: [{
+		  data:datas
+		}]
+		});
+	});
+</script>
+</body>
+</html>

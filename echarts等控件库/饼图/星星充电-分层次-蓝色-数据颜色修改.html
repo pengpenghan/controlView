@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>demo</title>
+	<style type="text/css">
+	body,html{
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	}
+	.bg{
+		position: relative;
+		width: 100%;
+		height: 100%;
+		background-size: 100% 100%;
+		background-color:#122333;
+	}
+	.container{
+		color: #b6b6b6;
+		width: 50%;
+		height :50%;
+		position: relative;
+		top: 20%;
+		margin:auto;
+	}
+	</style>
+</head>
+<body>
+	<div class="bg">
+		<div class="container" id="container">
+			
+		</div>
+	</div>
+<script type="text/javascript" src="../js/jquery-3.1.0.min.js"></script>
+<script type="text/javascript" src="../js/echarts/echarts.min.js"></script>
+<script type="text/javascript" src="../js/highcharts/highcharts.js"></script>
+<script type="text/javascript">
+	$(function () {
+		var option = {
+			backgroundColor: 'rgba(0,0,0,0)',
+			tooltip : {
+				axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+					 type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+				},
+				borderColor: '#43845D',
+				borderWidth: 1,
+				backgroundColor: 'rgba(11,42,89,0.3)',
+				formatter: "{b} : {c} ({d}%)"
+			},
+			series : [
+				{
+					type:'pie',
+					radius : ['0%', '75%'],
+					center: ['50%', '50%'],
+					data:[
+						{
+							value:25000,
+							name:'第三方用户',
+							itemStyle: {
+								normal: {
+									color: '#2E3876',
+									shadowBlur: 20,
+									shadowColor: 'rgba(0, 0, 0, 0.5)'
+								}
+							}
+						},
+						{
+							value:30000,
+							name:'SaaS用户',
+							itemStyle: {
+								normal: {
+									color: '#4253AD',
+									shadowBlur: 20,
+									shadowColor: 'rgba(0, 0, 0, 0.5)'
+								}
+							}
+						},
+						{
+							value:45000,
+							name:'企业用户',
+							itemStyle: {
+								normal: {
+									color: '#727EC8',
+									shadowBlur: 20,
+									shadowColor: 'rgba(0, 0, 0, 0.5)'
+								}
+							}
+						}
+					].sort(function (a, b) { return a.value - b.value; }),
+					roseType: 'radius',
+					label: {
+						normal: {
+							position: 'outer',
+							formatter: [
+								'{a|{b}}',
+								'{b|{c}}',
+								'{c|({d}%)}'
+							].join('\n'),
+							rich: {
+								a: {
+									color: '#8796AE',
+									fontSize: 15,
+									fontWeight:'bold',
+									lineHeight: 20
+								},
+								b: {
+									color: '#6EACF5',
+									fontSize: 15,
+									height: 19
+								},
+								c: {
+									color: '#8796AE',
+									fontSize: 15
+								}
+							}
+						}
+					},
+					labelLine: {
+						normal: {
+							lineStyle: {
+								color: 'rgba(18,74,175, 0.2)'
+							},
+							smooth: 0.2,
+							length: 10,
+							length2: 20
+						}
+					},
+					animationType: 'scale',
+					animationEasing: 'elasticOut',
+					animationDelay: function (idx) {
+						return Math.random() * 200;
+					}
+				}
+			]
+		}
+		var container = echarts.init(document.getElementById("container"),'');
+		container.setOption(option,true);
+		window.addEventListener("resize",function(){
+			myChart.resize();
+		});
+	});
+</script>
+</body>
+</html>

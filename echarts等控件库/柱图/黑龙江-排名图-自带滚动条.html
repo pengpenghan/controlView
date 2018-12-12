@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>demo</title>
+	<style type="text/css">
+	body,html{
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	}
+	.bg{
+		position: relative;
+		width: 100%;
+		height: 100%;
+		background-size: 100% 100%;
+		background-color:#122333;
+	}
+	.container{
+		color: #b6b6b6;
+		width: 50%;
+		height :50%;
+		position: relative;
+		top: 20%;
+		margin:auto;
+	}
+	</style>
+</head>
+<body>
+	<div class="bg">
+		<div class="container" id="container">
+			
+		</div>
+	</div>
+<script type="text/javascript" src="../js/jquery-3.1.0.min.js"></script>
+<script type="text/javascript" src="../js/echarts/echarts.min.js"></script>
+<script type="text/javascript" src="../js/highcharts/highcharts.js"></script>
+<script type="text/javascript">
+	$(function(){
+		var datas=[
+			{id: 910, scsFacName: "宏浩风电场", facGin: 301, float26: 49.5, curp: 26.8},
+			{id: 854, scsFacName: "十文字风电场", facGin: 20, float26: 77.2, curp: 21.4},
+			{id: 847, scsFacName: "绥阳风电场", facGin: 15, float26: 49.5, curp: 25.4},
+			{id: 893, scsFacName: "瑞好风电场", facGin: 16, float26: 98.5, curp: 32.6},
+			{id: 849, scsFacName: "虎峰岭风电场", facGin: 19, float26: 4.5, curp: 1.3},
+			{id: 892, scsFacName: "阿廷河风电场", facGin: 170, float26: 49.5, curp: 3.5},
+			{id: 861, scsFacName: "富锦风电场", facGin: 5, float26: 90.3, curp: 20.4},
+			{id: 841, scsFacName: "锐驰风电场", facGin: 72, float26: 49.5, curp: 1.9},
+			{id: 906, scsFacName: "双津河风电场", facGin: 177, float26: 49.5, curp: 14.4},
+			{id: 899, scsFacName: "立宏风电场", facGin: 181, float26: 49.5, curp: 14.2},
+			{id: 876, scsFacName: "岔林河风电场", facGin: 171, float26: 48.3, curp: 25.8},
+			{id: 898, scsFacName: "老虎岗风电场", facGin: 180, float26: 99, curp: 21.3},
+			{id: 846, scsFacName: "代马沟风电场", facGin: 33, float26: 59.5, curp: 16.7},
+			{id: 874, scsFacName: "青龙风电场", facGin: 21, float26: 99, curp: 8.9},
+			{id: 900, scsFacName: "东明园风电场", facGin: 183, float26: 99, curp: 20.7},
+			{id: 877, scsFacName: "高楞风电场", facGin: 66, float26: 99, curp: 36.8},
+			{id: 907, scsFacName: "大黑山风电场", facGin: 37, float26: 99, curp: 20.6},
+			{id: 864, scsFacName: "横岱山风电场", facGin: 8, float26: 90.1, curp: -0.6},
+			{id: 850, scsFacName: "海浪风电场", facGin: 42, float26: 49.2, curp: 14.4},
+			{id: 885, scsFacName: "顶丰风电场", facGin: 41, float26: 37.5, curp: 9.8},
+			{id: 897, scsFacName: "中丹风电场", facGin: 178, float26: 198, curp: 61.4}
+		];
+		var stationName = new Array();
+		var limitPowerTime = new Array();
+		datas.sort(sortBy('float26',false,parseFloat));
+		$.each(datas,function(i,data){
+			stationName.push(data.scsFacName);
+			limitPowerTime.push(data.float26);
+		});
+		var dataMax = Math.max.apply( Math, limitPowerTime );
+		var dataBack = [];
+		for(var i = 0;i < limitPowerTime.length;i ++){
+			dataBack.push(dataMax * 1.2);
+		}
+		var option = {
+			grid: {x:500,y:40,x2:130,y2:20,borderWidth:0},//改变图形控件的大小，数据越大图形越小
+			xAxis: {
+				type: 'value',
+				axisLine: {
+					show : false,
+					lineStyle: {
+						color: '#0177d4'
+					}
+				},
+				splitLine: {
+					show:false,
+					lineStyle: {
+						color: '#0177d4'
+					}
+				},
+				axisTick:{
+					show : false
+				},
+				axisLabel: {
+					show : false,
+					color: '#fff',
+					fontSize: 26
+				}
+			},
+			yAxis: {
+				name: "",
+				type: 'category',
+				nameTextStyle: {
+					color: '#fff',
+					fontSize: 33
+				},
+				axisLine: {
+					show : false,
+					lineStyle: {
+						color: '#0177d4'
+					}
+				},
+				axisTick:{
+					show : false
+				},
+				axisLabel: {
+					color: '#93a5b5',
+					margin: 40,
+					fontSize: 28
+				},
+				splitLine: {
+					show:false,
+					lineStyle: {
+						color: '#0177d4'
+					}
+				},
+				data: stationName
+			},
+			dataZoom:[
+					  {
+						  type: 'slider',
+						  show: true,
+						  backgroundColor: 'rgba(0,0,0,0)',
+						  yAxisIndex: [0],
+						  start: 60,
+						  end: 100,
+						  top: '2%',
+						  bottom:'2%',
+						  fillerColor: '#3A3D94',
+						  borderColor: 'rgba(58,61,148,0.2)',
+						  showDetail: false,
+						  dataBackground:{
+							   lineStyle: {
+								  color:'red',
+								  width: 0
+							   }
+						   },
+						  handleStyle: {
+							  color:'#071752'
+						  }
+					  }
+				  ],
+			series: [{
+				type: 'bar',
+				barGap: '-100%',
+				barWidth: 22,
+				itemStyle:{
+					normal:{
+						color:new echarts.graphic.LinearGradient(1, 0, 0, 0, [{
+							offset: 0,
+							color: '#7052f4'
+						}, {
+							offset: 0.8,
+							color: '#00b0ff'
+						}], false)
+					}
+				},
+				data: limitPowerTime
+			},{
+				type : 'bar',
+				barGap: '-100%',
+				barWidth: 22,
+				itemStyle:{
+					normal:{
+						color : 'rgba(16,31,52,0.5)'
+					}
+				},
+				label: {
+					normal: {
+						show: true,
+						position: 'right',
+						fontSize: 28,
+						color: '#49CDE9',
+						offset: [40,0],
+						formatter: function(params){
+							return limitPowerTime[params.dataIndex]===0?'-':limitPowerTime[params.dataIndex]
+						}
+					}
+				},
+				data : dataBack
+			}]
+		};
+		var container = echarts.init(document.getElementById("container"),'');
+		container.setOption(option,true);
+		window.addEventListener("resize",function(){
+			container.resize();
+		});
+	});
+	/**
+	 * 针对数组键值排序
+	 */
+	var sortBy=function (filed,rev,primer){
+		rev = (rev) ? -1 : 1;
+		return function (a, b) {
+			a = a[filed];
+			b = b[filed];
+			if (typeof (primer) != 'undefined') {
+			  a = primer(a);
+			  b = primer(b);
+			}
+			if (a < b) { return rev * -1; }
+			if (a > b) { return rev * 1; }
+			return 1;
+		}
+	};
+</script>
+</body>
+</html>

@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>demo</title>
+	<style type="text/css">
+	body,html{
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	}
+	.bg{
+		position: relative;
+		width: 100%;
+		height: 100%;
+		background-size: 100% 100%;
+		background-color:#122333;
+	}
+	.container{
+		color: #b6b6b6;
+		width: 50%;
+		height :50%;
+		position: relative;
+		top: 20%;
+		margin:auto;
+	}
+	</style>
+</head>
+<body>
+	<div class="bg">
+		<div class="container" id="container">
+			
+		</div>
+	</div>
+<script type="text/javascript" src="../js/jquery-3.1.0.min.js"></script>
+<script type="text/javascript" src="../js/echarts/echarts.min.js"></script>
+<script type="text/javascript" src="../js/highcharts/highcharts.js"></script>
+<script type="text/javascript">
+	$(function () {
+		var option = {
+		    tooltip : {show : false},
+		    toolbox: {
+		        show: false
+		    },
+		    series : [
+		        {
+		            //name: '当前充电功率',
+		            type: 'gauge',
+		            z: 3,
+		            min: 0,
+		            max: 100,
+		            splitNumber: 10,
+		            radius: '70%',
+		            axisLine: {            // 坐标轴线
+		                lineStyle: {       // 属性lineStyle控制线条样式
+		                	color : [[0.2, '#9DC3D8'], [0.8, '#2EBCD4'], [1, '#237FDD']],
+		                    width: 14,
+		                }
+		            },
+		            axisTick: {            // 坐标轴小标记
+		            	splitNumber: 10,
+		                length: 18,        // 属性length控制线长
+		                lineStyle: {       // 属性lineStyle控制线条样式
+		                    color: 'auto',
+		                    width: 2
+		                }
+		            },
+		            splitLine: {           // 分隔线
+		                length: 30,         // 属性length控制线长
+		                lineStyle: {       // 属性lineStyle（详见lineStyle）控制线条样式
+		                    color: 'auto',
+		                    width: 2
+		                }
+		            },
+		            pointer: {
+		            	length: '80%',
+		                width: 8
+		            },
+		            itemStyle: {
+		            	normal : {
+		            		color : '#1B97FE'
+		            	}
+		            },
+		            axisLabel: {
+		            	textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+		                	color:'#CEDCE4',
+		                    fontSize: 14,
+		                },
+//		                formatter:function(v){
+//		                    switch (v + '') {
+//		                        case '0' : return '0';
+//		                        case '100' : return '100';
+//		                        case '200' : return '200';
+//		                        case '300' : return '300';
+//		                        case '400' : return '400';
+//		                        case '500' : return '500';
+//		                        case '600' : return '600';
+//		                        case '700' : return '700';
+//		                        case '800' : return '800';
+//		                        case '900' : return '900';
+//		                        case '1000' : return '1000';
+//		                    }
+//		                }
+		            },
+		            title : {
+		            	offsetCenter: [0, 25],       // x, y，单位px
+		            	textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+		                	color:'#F3F3F3',
+		                    fontWeight: 'bolder',
+		                    fontSize: 18,
+		                }
+		            },
+		            detail : {
+		            	show:false,
+		                textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+		                    fontWeight: 'bolder'
+		                }
+		            },
+		            data:[{value: 20}]
+		        },
+		        {
+		            //name: '当前充电功率',
+		            type: 'gauge',
+		            z: 1,
+		            min: 0,
+		            max: 100,
+		            startAngle: 226,
+		            endAngle: -46,
+		            splitNumber: 100,
+		            radius: '80%',
+		            axisLine: {            // 坐标轴线
+		                lineStyle: {       // 属性lineStyle控制线条样式
+		                	color : [[1, '#19366E']],
+		                    width: 12,
+		                }
+		            },
+		            title : {show : false},
+		            axisTick: {show : false},
+		            splitLine: {show : false},
+		            axisLabel: {show : false},
+		            detail: {show : false},
+		            pointer: {show : false},
+		            data:[{value: 30}]
+		        },
+		        {
+		            name: '可逆变功率',
+		            type: 'gauge',
+		            center: ['20%', '55%'],    // 默认全局居中
+		            radius: '50%',
+		            min:0,
+		            max:100,
+		            endAngle:45,
+		            splitNumber:5,
+		            axisLine: {            // 坐标轴线
+		                lineStyle: {       // 属性lineStyle控制线条样式
+		                	color : [[0.2, '#9DC3D8'], [0.8, '#2EBCD4'], [1, '#237FDD']],
+		                    width: 14,
+		                }
+		            },
+		            axisTick: {            // 坐标轴小标记
+		            	splitNumber: 10,
+		                length:18,        // 属性length控制线长
+		                lineStyle: {       // 属性lineStyle控制线条样式
+		                    color: 'auto',
+		                    width:1
+		                }
+		            },
+		            splitLine: {           // 分隔线
+		                length:30,         // 属性length控制线长
+		                lineStyle: {       // 属性lineStyle（详见lineStyle）控制线条样式
+		                    color: 'auto',
+		                    width:1
+		                }
+		            },
+		            pointer: {
+		            	length: '60%',
+		                width: 5
+		            },
+		            itemStyle: {
+		            	normal : {
+		            		color : '#3CEEFF'
+		            	}
+		            },
+		            title: {
+		            	show: false,
+		                offsetCenter: [0, '-8%'],       // x, y，单位px
+		                textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+		                	color:'#F3F3F3',
+		                    fontWeight: 'bolder',
+		                    fontSize: 15,
+		                }
+		            },
+		            axisLabel: {
+		            	textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+		                	color:'#CEDCE4',
+		                    fontSize: 15,
+		                },
+//		                formatter:function(v){
+//		                    switch (v + '') {
+//		                        case '0' : return '0';
+//		                        case '100' : return '100';
+//		                        case '200' : return '200';
+//		                        case '300' : return '300';
+//		                        case '400' : return '400';
+//		                        case '500' : return '500';
+//		                        case '600' : return '600';
+//		                        case '700' : return '700';
+//		                        case '800' : return '800';
+//		                        case '900' : return '900';
+//		                        case '1000' : return '1000';
+//		                    }
+//		                }
+		            },
+		            detail: {
+		            	show: false,
+		                textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+		                	fontSize: 20,
+		                    fontWeight: 'bolder'
+		                }
+		            },
+		            data:[
+		                  {
+		                	  value: 50
+		                  }]
+		        },
+		        {
+		            name: '可逆变功率',
+		            type: 'gauge',
+		            center: ['20%', '55%'],    // 默认全局居中
+		            radius: '60%',
+		            min:0,
+		            max:100,
+		            startAngle: 225.5,
+		            endAngle:44.5,
+		            splitNumber:5,
+		            axisLine: {            // 坐标轴线
+		                lineStyle: {       // 属性lineStyle控制线条样式
+		                	color : [[1, '#19366E']],
+		                    width: 12,
+		                }
+		            },
+		            title : {show : false},
+		            axisTick: {show : false},
+		            splitLine: {show : false},
+		            axisLabel: {show : false},
+		            detail: {show : false},
+		            pointer: {show : false},
+		            data:[{value: 30}]
+		        },
+		        {
+		            name: '总可控容量',
+		            type: 'gauge',
+		            //center: ['20%', '55%'],    // 默认全局居中
+		            center: ['80%', '55%'],    // 默认全局居中
+		            radius: '50%',
+		            min: 0,
+		            max: 100,
+		            startAngle: 135,
+		            endAngle: -45,
+		            splitNumber: 5,
+		            axisLine: {            // 坐标轴线
+		                lineStyle: {       // 属性lineStyle控制线条样式
+		                	//color: ['#9DC3D8','#2EBCD4','#237FDD'],
+		                	color : [[0.2, '#9DC3D8'], [0.8, '#2EBCD4'], [1, '#237FDD']],
+		                    width: 14,
+		                }
+		            },
+		            axisTick: {            // 坐标轴小标记
+		                splitNumber: 10,
+		                length: 18,        // 属性length控制线长-短刻度线
+		                lineStyle: {       // 属性lineStyle控制线条样式
+		                    color: 'auto',
+		                    width: 1
+		                }
+		            },
+		            axisLabel: {
+		            	textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+		                	color:'#CEDCE4',
+		                    fontSize: 15,
+		                },
+//		                formatter:function(v){
+//		                    switch (v + '') {
+//		                        case '0' : return '0';
+//		                        case '100' : return '100';
+//		                        case '200' : return '200';
+//		                        case '300' : return '300';
+//		                        case '400' : return '400';
+//		                        case '500' : return '500';
+//		                        case '600' : return '600';
+//		                        case '700' : return '700';
+//		                        case '800' : return '800';
+//		                        case '900' : return '900';
+//		                        case '1000' : return '1000';
+//		                    }
+//		                }
+		            },
+		            splitLine: {           // 分隔线
+		                length: 30,         // 属性length控制线长刻度 区段颜色-长刻度线
+		                lineStyle: {       // 属性lineStyle（详见lineStyle）控制线条样式
+		                    color: 'auto',
+		                    width: 1
+		                }
+		            },
+		            pointer: {
+		            	length: '60%',
+		                width: 5
+		            },
+		            itemStyle: {
+		            	normal : {
+		            		color : '#3CEEFF'
+		            	}
+		            },
+		            title : {
+		            	show : false,
+		            	offsetCenter: [0, '-40%'],       // x, y，单位px
+		            	textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+		                	color:'#F3F3F3',
+		                    fontWeight: 'bold',
+		                    fontSize: 20,
+		                }
+		            },
+		            detail : {
+		                show: false
+		            },
+		            data:[{value: 20}]
+		        },{
+		            name: '总可控容量',
+		            type: 'gauge',
+		            z : 1,
+		            //center: ['20%', '55%'],    // 默认全局居中
+		            center: ['80%', '55%'],    // 默认全局居中
+		            radius: '60%',
+		            min: 0,
+		            max: 100,
+		            startAngle: 136,
+		            endAngle: -46,
+		            splitNumber: 10,
+		            axisLine: {            // 坐标轴线
+		                lineStyle: {       // 属性lineStyle控制线条样式
+		                	//color: ['#9DC3D8','#2EBCD4','#237FDD'],
+		                	color : [[1, '#19366E']],
+		                    width: 12,
+		                }
+		            },
+		            title : {show : false},
+		            axisTick: {show : false},
+		            splitLine: {show : false},
+		            axisLabel: {show : false},
+		            detail: {show : false},
+		            pointer: {show : false},
+		            data:[{value: 20}]
+		        }
+		    ]
+		};
+		var container = echarts.init(document.getElementById("container"),'');
+		container.setOption(option,true);
+		window.addEventListener("resize",function(){
+			myChart.resize();
+		});
+	});
+</script>
+</body>
+</html>

@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>demo</title>
+	<style type="text/css">
+	body,html{
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	}
+	.bg{
+		position: relative;
+		width: 100%;
+		height: 100%;
+		background-size: 100% 100%;
+		background-color:#122333;
+	}
+	.container{
+		color: #b6b6b6;
+		width: 50%;
+		height :100%;
+		background-color: #122333;
+		position: relative;
+		margin:auto;
+	}
+	</style>
+</head>
+<body>
+	<div class="bg">
+		<div class="container" id="container">
+			
+		</div>
+	</div>
+<script type="text/javascript" src="../js/jquery-3.1.0.min.js"></script>
+<script type="text/javascript" src="../js/public.js"></script>
+<script type="text/javascript">
+	$(function () {
+		cityMap('','','','');
+	});
+	function cityMap(mapName,cityCode,operator,obj) {
+		var top = '23%', left = '10%', left1 = '12%', top1 = '24.5%';
+		var width = '80%', height = '65%';
+		var params = [];
+		var label ={"show":true};
+		var normal={"areaColor":'red',"borderColor":'#F8FDF7',"borderType":'solid',"borderWidth":"6","lable":label};
+		var itemStyle={"normal":normal}; 
+		params.push({"itemStyle":itemStyle,"name":'大庆'});
+		var station = function(data){
+			var res = [];
+			res.push({name:'冯屯',value:[124.135047,47.475643,20]});
+			res.push({name:'大庆',value:[124.479128,46.877648,20]});
+			res.push({name:'松北',value:[125.666183,46.458308,20]});
+			res.push({name:'哈南',value:[126.631926,45.67717,20]});
+			res.push({name:'永源',value:[127.031788,45.780321,20]});
+			res.push({name:'兴福',value:[129.029557,47.033477,20]});
+			res.push({name:'黑河',value:[127.525713,50.252194,20]});
+			res.push({name:'群林',value:[130.28984,47.357854,20]});
+			res.push({name:'方正',value:[128.833907,45.859163,20]});
+			res.push({name:'双鸭山B厂',value:[131.164192,46.641108,20]});
+			res.push({name:'林海',value:[130.791234,45.042651,20]});
+			res.push({name:'鹤岗B厂',value:[130.47848,48.074642,20]});
+			res.push({name:'佳木斯B厂',value:[132.998909,47.715828,20]})
+			return res;
+		}
+		var citys = function(data){
+			var res = [];
+			res.push({name:'黑河市',value:6});
+			res.push({name:'大兴安岭地区',value:3});
+			res.push({name:'齐齐哈尔市',value:1});
+			res.push({name:'大庆市',value:4});
+			res.push({name:'绥化市',value:5});
+			res.push({name:'哈尔滨市',value:2});
+			res.push({name:'牡丹江市',value:6});
+			res.push({name:'鸡西市',value:5});
+			res.push({name:'七台河市',value:3});
+			res.push({name:'双鸭山市',value:1});
+			res.push({name:'佳木斯市',value:5});
+			res.push({name:'鹤岗市',value:7});
+			res.push({name:'伊春市',value:2})
+			return res;
+		}
+		//红色列表-潮流
+		var redlines = function(data){
+			var res = [];
+			res.push({fromName:'冯屯',toName:'大庆',coords:[[124.135047,47.475643],[124.479128,46.877648]]});
+			res.push({fromName:'方正',toName:'群林',coords:[[128.833907,45.859163],[130.28984,47.357854]]});
+			res.push({fromName:'兴福',toName:'黑河',coords:[[129.029557,47.033477],[127.525713,50.252194]]});
+			return res;
+		}
+		//橙色列表-潮流
+		var orangelines = function(data){
+			var res = [];
+			res.push({fromName:'大庆',toName:'松北',coords:[[124.479128,46.877648],[125.666183,46.458308]]});
+			res.push({fromName:'方正',toName:'林海',coords:[[128.833907,45.859163],[130.791234,45.042651]]});
+			return res;
+		}
+		//绿色列表-潮流
+		var greenlines = function(data){
+			var res = [];
+			res.push({fromName:'松北',toName:'哈南',coords:[[125.666183,46.458308],[126.631926,45.67717]]});
+			res.push({fromName:'哈南',toName:'永源',coords:[[126.631926,45.67717],[127.031788,45.780321]]});
+			res.push({fromName:'永源',toName:'方正',coords:[[127.031788,45.780321],[128.833907,45.859163]]});
+			res.push({fromName:'永源',toName:'兴福',coords:[[127.031788,45.780321],[129.029557,47.033477]]});
+			res.push({fromName:'方正',toName:'双鸭山B厂',coords:[[128.833907,45.859163],[131.164192,46.641108]]});
+			res.push({fromName:'兴福',toName:'群林',coords:[[129.029557,47.033477],[130.28984,47.357854]]});
+			res.push({fromName:'群林',toName:'鹤岗B厂',coords:[[130.28984,47.357854],[130.47848,48.074642]]});
+			res.push({fromName:'群林',toName:'佳木斯B厂',coords:[[130.28984,47.357854],[132.998909,47.715828]]});
+			return res;
+		}
+		//橙色虚线-潮流
+		var dashlines = function(data){
+			var res = [];
+			res.push({fromName:'松北',toName:'兴福',coords:[[125.666183,46.458308],[129.029557,47.033477]]});
+			return res;
+		}
+		var container = echarts.init(document.getElementById("container"), '');
+		container.setOption({
+			title : {
+				x : 'center',
+				text : '',
+				textStyle : {
+					color : '#fff',
+					fontSize : 16
+				}
+			},
+			visualMap: {
+				show : true,
+				max : 7,
+				left : 80,
+				textGap: 30,
+				bottom: 0,
+				itemWidth: 60,
+				itemHeight: 240,
+				splitNumber: 0.2,
+				text: ['高', '低'], // 文本，默认为数值文本
+				calculable: true,
+				inRange: {
+					color: ['#354465','#353084','#2F32CF','#3562FD','#3E90F6','#36D5FD','#32FEFD','#51FFAA','#2FFE2C',
+							'#9DFF54','#DEFF38','#FDF238','#FFC531','#D37F36','#EF695E','#DD3163','#B73051','#864354']
+				},
+				textStyle: {
+					color: '#fff',
+					fontSize: 40
+				}
+			},
+			geo : [{
+				map : 'heilongjiang',
+				roam : false,
+				width : width,
+				height : height,
+				left : left,
+				top : top,
+				regions : params,
+				aspectScale : 0.6,// 将地图拉扁
+				z : 100,
+				silent: true,//不触发地图高亮
+				label : {
+					normal : {
+						show : true,
+						textStyle : {
+							color : '#021102',
+							fontSize : 30,
+							fontWidth : 3
+						}
+					},
+					emphasis : {
+						show : false,
+					}
+				},
+				itemStyle : {
+					normal : {
+						borderColor: '#1886BB',
+						borderWidth: 1,
+						areaColor: {
+							type: 'radial',
+							x: 1,
+							y: 0.5,
+							r: 1,
+							colorStops: [{
+								offset: 0, 
+								color: 'rgba(42,29,231, 0.4)' // 0% 处的颜色
+							}, {
+								offset: 0.3, 
+								color: 'rgba(42,29,231, 0.7)' // 30% 处的颜色
+							}, {
+								offset: 0.6, 
+								color: 'rgba(42,29,231, 0.8)' // 60% 处的颜色
+							}, {
+								offset: 1, 
+								color: 'rgba(42,29,231, 0.9)' // 100% 处的颜色
+							}],
+							globalCoord: false // 缺省为 false
+						},
+						shadowColor: 'rgba(128, 217, 248, 1)',
+						// shadowColor: 'rgba(255, 255, 255, 1)',
+						shadowOffsetX: -2,
+						shadowOffsetY: 2,
+						shadowBlur: 10
+					},
+					emphasis : {
+						show : false
+					}
+				}
+			}, {
+				map : 'heilongjiang',
+				roam : false,
+				regions : [],
+				aspectScale : 0.9,// 将地图拉扁
+				width : width,
+				height : height,
+				left : left1,
+				top : top1,
+				silent : true,
+				itemStyle : {
+					normal : {
+						areaColor : 'rgba(57,67,221,0.63)',
+						borderColor : '#4988CD',
+						borderWidth : 2
+					},
+					emphasis : {
+						show : false,
+						borderWidth : 3,
+						borderColor : '#fffb27',
+						areaColor : '#46d99f',
+						label : {
+							shadowColor : '#fff', // 默认透明
+							shadowBlur : 10,
+							show : false
+						}
+					}
+				}
+			}],
+			series : [{
+				type: 'scatter',
+				geoIndex: 0,
+				coordinateSystem: 'geo',
+				data:station(),
+				symbol:'image://..//images//dianzhan.png',
+				symbolSize: 20,
+				itemStyle: {
+				  normal: {
+					   borderColor: '#fff',
+						 borderWidth: 2
+					} 
+				 },
+				 label : {
+					normal : {
+						show : true,
+						position: ['100%', '10%'],
+						<!-- formatter:function(param){ -->
+							<!-- return param.data.name; -->
+						<!-- }, -->
+						textStyle : {
+							color : '#39E1FF',
+							fontWeight: 'bold',
+							fontSize : 20,
+							fontWidth : 3
+						}
+					},
+					emphasis : {
+						show : false,
+					}
+				},
+				 zlevel : 3
+			},{
+				type : 'lines',
+				geoIndex: 0,
+				coordinateSystem: 'geo',
+				effect: {
+					show: true,
+					period: 6,
+					trailLength: 0,
+					symbol: 'arrow', //标记类型
+					symbolSize: 18
+				},
+				lineStyle:{normal:{color:'red',opacity: 1,width:8,curveness: 0}},
+				data :redlines(),
+				zlevel : 2
+			},{
+				type : 'lines',
+				geoIndex: 0,
+				coordinateSystem: 'geo',
+				effect: {
+					show: true,
+					period: 6,
+					trailLength: 0,
+					symbol: 'arrow', //标记类型
+					symbolSize: 18
+				},
+				lineStyle:{normal:{color:'orange',opacity: 1,width:8,curveness: 0}},
+				data : orangelines(),
+				zlevel : 2
+			},{
+				type : 'lines',
+				geoIndex: 0,
+				coordinateSystem: 'geo',
+				effect: {
+					show: true,
+					period: 6,
+					trailLength: 0,
+					symbol: 'arrow', //标记类型
+					symbolSize: 18
+				},
+				lineStyle:{normal:{color:'green',opacity: 1,width:8,curveness: 0}},
+				data : greenlines(),
+				zlevel : 2
+			},{
+				type : 'lines',
+				geoIndex: 0,
+				coordinateSystem: 'geo',
+				effect: {
+					show: true,
+					period: 6,
+					trailLength: 0,
+					symbol: 'none', //标记类型
+					symbolSize: 18
+				},
+				lineStyle:{normal:{type:'dashed',color:'orange',opacity: 1,width:8,curveness: 0}},
+				data : dashlines(),
+				zlevel : 2
+			},{
+			type: 'map',
+	        geoIndex: 0,
+	        mcoordinateSystem: 'geo',
+	        label: {
+	            normal: {
+	                show: true
+	            },
+	            emphasis: {
+	                show: true
+	            }
+	        },
+	        data : citys()
+		}]
+		});
+		window.addEventListener("resize",function(){
+			container.resize();
+		});
+		container.on('click', function(params) {
+			var city_name = params.name
+			if (city_name == '山东' || city_name == '安徽' || city_name == '澳门'
+					|| city_name == '北京' || city_name == '重庆' || city_name == '福建'
+					|| city_name == '甘肃' || city_name == '广东' || city_name == '广西'
+					|| city_name == '贵州' || city_name == '海南' || city_name == '河北'
+					|| city_name == '黑龙江' || city_name == '河南' || city_name == '湖北'
+					|| city_name == '湖南' || city_name == '江苏' || city_name == '江西'
+					|| city_name == '吉林' || city_name == '辽宁' || city_name == '内蒙古'
+					|| city_name == '宁夏' || city_name == '青海' || city_name == '山东'
+					|| city_name == '上海' || city_name == '山西' || city_name == '陕西'
+					|| city_name == '四川' || city_name == '天津' || city_name == '香港'
+					|| city_name == '新疆' || city_name == '西藏' || city_name == '云南'
+					|| city_name == '浙江' || city_name == '台湾') {
+				cityMap(city_name,'','');
+			}
+		});
+	}
+</script>
+</body>
+</html>

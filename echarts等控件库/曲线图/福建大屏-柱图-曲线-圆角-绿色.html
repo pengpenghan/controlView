@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>demo</title>
+	<style type="text/css">
+	body,html{
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	}
+	.bg{
+		position: relative;
+		width: 100%;
+		height: 100%;
+		background-size: 100% 100%;
+		background-color:#122333;
+	}
+	.container{
+		color: #b6b6b6;
+		width: 50%;
+		height :50%;
+		position: relative;
+		top: 20%;
+		margin:auto;
+	}
+	</style>
+</head>
+<body>
+	<div class="bg">
+		<div class="container" id="container">
+			
+		</div>
+	</div>
+<script type="text/javascript" src="../js/jquery-3.1.0.min.js"></script>
+<script type="text/javascript" src="../js/echarts/echarts.min.js"></script>
+<script type="text/javascript" src="../js/highcharts/highcharts.js"></script>
+<script type="text/javascript">
+	$(function(){
+		var xList = ["三明","南平","厦门","宁德","泉州","漳州","福州","莆田","龙岩"];
+		var datas1 = [2364,4173,108,2579,1052,3532,2704,738,2741];
+		var datas2 = [19.8,8.1,41.2,19,18,-5,0,22,25];
+		var container = echarts.init(document.getElementById('container'),'');
+		var option = {
+			noDataLoadingOption : {
+				text : "No data to display.",
+				effect : 'bubble',
+				effectOption : {
+					backgroundColor : 'rgba(255,255,255,0)',
+					effect : {
+						n : 0
+					}
+				}
+			},
+			grid : {
+				containLabel : true,
+				borderWidth : 0,
+				x : 50,
+				y : 25,
+				x2 : 36,
+				y2 : 50
+			},
+			calculable : true,
+			tooltip : {
+				trigger : 'axis',
+				axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+		            type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+		        },
+		        borderWidth: 2,
+			       borderColor: '#1A5990',
+			       backgroundColor: 'rgba(26,89,144,0.6)',
+			       formatter: "{b} <br/>{a}: {c}<br/>{a1}:{c1}%",
+			       position: function (point, params, dom) {
+			    	      // 固定在顶部
+			    	      return [point[0], '10%'];
+			    	  }
+			},
+			xAxis : {
+				type : 'category',
+				axisLabel : {
+					textStyle : {
+						color : '#828999',
+						fontSize : 11
+					}
+				},
+				splitLine : {
+					show : false
+				},
+				axisTick : {
+					show : false
+				},
+				data : xList
+			},
+			yAxis : [ {
+				name : '数目',
+				nameTextStyle: {
+					color: '#828999'
+				},
+				type : 'value',
+				splitLine : {
+					show : true,
+					lineStyle : {
+						type : 'dashed',
+						color : 'rgb(67,67,67)'
+					}
+				},
+				axisLabel : {
+					textStyle : {
+						color : '#828999',
+						fontSize : 11
+					}
+				}
+			}, {
+				name: '同比',
+				nameTextStyle: {
+					color: '#828999'
+				},
+				type : 'value',
+				splitLine : {
+					show : false
+				},
+				axisLine : {
+					lineStyle:{
+						color: '#893815',
+					}
+				},
+				axisLabel : {
+					textStyle : {
+						color : '#828999',
+						fontSize : 11
+					},
+					formatter : '{value}%'
+				}
+			} ],
+			series : [ {
+				name : '今年停电次数',
+				type : 'bar',
+				barCategoryGap : 22,
+				itemStyle : {
+					normal : {
+						label : {
+							show : true,
+							textStyle : {
+								color : 'rgb(146,208,255)',
+								fontFamily : '微软雅黑',
+								fontSize : 12
+							}
+						},
+						color:'#00C403',
+						barBorderRadius : 4
+					}
+				},
+				data : datas1
+			}, {
+				name : '同比下降率',
+				type : 'line',
+				yAxisIndex : 1,
+				symbol : 'emptyCircle',
+				symbolSize : 3,
+				smooth : true,
+				itemStyle : {
+					normal : {
+						color : '#AE1F95'
+					}
+				},
+				data : datas2
+			} ]
+		};
+		container.setOption(option,true);
+		//自适应
+		window.addEventListener("resize",function(){
+			container.resize();
+		});
+	});
+</script>
+</body>
+</html>

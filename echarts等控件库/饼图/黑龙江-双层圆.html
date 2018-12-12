@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>demo</title>
+	<style type="text/css">
+	body,html{
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	}
+	.bg{
+		position: relative;
+		width: 100%;
+		height: 100%;
+		background-size: 100% 100%;
+		background-color:#122333;
+	}
+	.container{
+		color: #b6b6b6;
+		width: 50%;
+		height :50%;
+		position: relative;
+		top: 20%;
+		margin:auto;
+	}
+	</style>
+</head>
+<body>
+	<div class="bg">
+		<div class="container" id="container">
+			
+		</div>
+	</div>
+<script type="text/javascript" src="../js/jquery-3.1.0.min.js"></script>
+<script type="text/javascript" src="../js/echarts/echarts.min.js"></script>
+<script type="text/javascript" src="../js/highcharts/highcharts.js"></script>
+<script type="text/javascript">
+	$(function () {
+		var option = {
+			title:{
+				text : 45 + '%',
+				textStyle:{
+					color : 'rgba(22,190,98,1)',
+					fontSize : 48,
+				},
+				x : 'center',
+				y : 'center'
+			},
+			tooltip: {
+				trigger: "item"
+			},
+			series: [{
+					name: "",
+					type: "gauge",
+					radius: "88%",
+					center : ["50%","50%"],
+					startAngle: 0,
+					endAngle: 359.9,
+					splitNumber: 50,
+					axisTick: {
+						show: false
+					},
+					splitLine: {
+						length: 55,
+						lineStyle: {
+							width: 8,
+							color: "#0C1019"
+						}
+					},
+					axisLabel: {
+						show: false
+					},
+					pointer: {
+						show: false
+					},
+					axisLine: {
+						lineStyle: {
+							opacity: 0
+						}
+					},
+					detail: {
+						show: false
+					},
+					data: [{
+						value: 0,
+						name: ""
+					}]
+				},
+				{
+					name: "",
+					type: "pie",
+					radius: ["58%","88%"],
+					center : ["50%","50%"],
+					startAngle: 62,
+					silent: true,
+					label: {
+						normal: {
+							show: false,
+							position: "center"
+						}
+					},
+					labelLine: {
+						normal: {
+							show: false
+						}
+					},
+					z: 0,
+					zlevel: 0,
+					data: [{
+							value: 100-45,
+							name: "",
+							label: {
+								normal: {
+									show: false
+								}
+							},
+							itemStyle: {
+								normal: {
+									color: "rgba(10,37,108,0.5)"
+								}
+							}
+						},
+						{
+							value: 45,
+							name: "",
+							label: {
+								normal: {
+									show: false
+								}
+							},
+							itemStyle: {
+								normal: {
+									color: "#14CC66"
+								}
+							}
+						}
+					]
+				},{
+					name: "",
+					type: "pie",
+					radius: ["95%","98%"],
+					center : ["50%","50%"],
+					startAngle: 30,
+					silent: true,
+					label: {
+						normal: {
+							show: false,
+							position: "center"
+						}
+					},
+					labelLine: {
+						normal: {
+							show: false
+						}
+					},
+					data: [
+						{
+							value: 360,
+							name: "",
+							label: {
+								normal: {
+									show: false
+								}
+							},
+							itemStyle: {
+								normal: {
+									color: "rgba(10,37,108,0.5)"
+								}
+							}
+						}
+					]
+				},{
+					name: "",
+					type: "pie",
+					radius: ["48%","51%"],
+					center : ["50%","50%"],
+					startAngle: 30,
+					silent: true,
+					label: {
+						normal: {
+							show: false,
+							position: "center"
+						}
+					},
+					labelLine: {
+						normal: {
+							show: false
+						}
+					},
+					data: [
+						{
+							value: 360,
+							name: "",
+							label: {
+								normal: {
+									show: false
+								}
+							},
+							itemStyle: {
+								normal: {
+									color: "rgba(10,37,108,0.5)"
+								}
+							}
+						}
+					]
+				}
+			]
+		}
+		var container = echarts.init(document.getElementById("container"),'');
+		container.setOption(option,true);
+		window.addEventListener("resize",function(){
+			myChart.resize();
+		});
+	});
+</script>
+</body>
+</html>

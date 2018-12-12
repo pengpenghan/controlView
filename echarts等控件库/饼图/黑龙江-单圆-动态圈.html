@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>demo</title>
+	<style type="text/css">
+	body,html{
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	}
+	.bg{
+		position: relative;
+		width: 100%;
+		height: 100%;
+		background-size: 100% 100%;
+		background-color:#122333;
+	}
+	.container{
+		color: #b6b6b6;
+		width: 50%;
+		height :50%;
+		position: relative;
+		top: 20%;
+		margin:auto;
+	}
+	.twoEcharts{
+		overflow: hidden;
+		margin-left:20%;
+	}
+	.twoEcharts li{
+		float: left;
+		height: 450px;
+		margin-right: 52px;
+	}
+	.twoEcharts li:last-child {
+		margin-right: 0;
+	}
+	.twoEcharts li .echartWrapper{
+		float: left;
+		position: relative;
+		width: 205px;
+		height: 205px;
+		margin-right: 55px;
+		margin-top: 155px;
+	}
+	.twoEcharts li .echartWrapper .rotate{
+		position: absolute;
+		left:4px;
+		top:4px;
+		width:144px;
+		height:144px;
+		background: url("../images/net25.png") no-repeat;
+		background-size: 100%;
+	}
+	.twoEcharts li .echartWrapper .rotate1{
+		background: url("../images/net26.png") no-repeat;
+		background-size: 100%;
+	}
+	.twoEcharts li .echartWrapper .echart{
+		position: absolute;
+		left:20px;
+		top:20px;
+		width: 112px;
+		height: 112px;
+	}
+	.twoEcharts li .data{
+		float: left;
+		margin-left: 21px;
+	}
+	.twoEcharts li .data span{
+		display: block;
+		font-size: 28px;
+		color: #fff;
+		margin: 34px 0 13px 0;
+	}
+	.twoEcharts li .data em{
+		font-size: 28px;
+		color: #fef018;
+	}
+	</style>
+</head>
+<body>
+	<div class="bg">
+		<div class="container" id="container">
+			<ul class="twoEcharts">
+				<li>
+					<div class="echartWrapper" style="">
+						<div class="rotate" ></div>
+						<div class="echart" id="echart06"></div>
+					</div>
+				</li>
+			   <li>
+				   <div class="echartWrapper">
+					   <div class="rotate rotate1"></div>
+					   <div class="echart" id="echart07"></div>
+				   </div>
+			   </li>
+		   </ul>
+		</div>
+	</div>
+<script type="text/javascript" src="../js/jquery-3.1.0.min.js"></script>
+<script type="text/javascript" src="../js/echarts/echarts.min.js"></script>
+<script type="text/javascript" src="../js/highcharts/highcharts.js"></script>
+<script type="text/javascript">
+	$(function () {
+		/*2D旋转效果*/
+		var deg=0;
+		setInterval(rotate,10);
+		function rotate(){
+			deg++;
+			$(".rotate").css("transform","rotate("+deg+"deg)");
+		}
+		var e06 = echarts.init(document.getElementById('echart06'),'');
+		var option06 = {
+				tooltip: {
+					trigger: 'item',
+					formatter: "{b} <br/>{c} ({d}%)",
+					position: ['50%', '50%']
+				},
+				series: [{
+					type: 'pie',
+					radius: '95%',
+					center: ['50%', '50%'],
+					clockwise: true,
+					hoverAnimation: false,
+					data: [{
+						name:'风电占比',
+						value: 100-55,
+						itemStyle: {
+							normal: {
+								color: '#232325',
+								borderWidth:2,
+								borderColor:'#0a2741',
+								label: {
+									show: false
+								},
+								labelLine: {
+									show: false
+								}
+							}
+						}
+					},{
+						name:'风电占比',
+						value: 55,
+						itemStyle: {
+							normal: {
+								"color": 'rgba(74,95,226,0.5)',
+								borderWidth:2,
+								borderColor:'#07a7f3',
+								label: {
+									show: false
+								},
+								labelLine: {
+									show: false
+								}
+							}
+						}
+					}],
+					label: {
+						normal: {
+							show: false
+						}
+					},
+					labelLine: {
+						normal: {
+							show: false
+						}
+					}
+				}]
+			};
+		e06.setOption(option06,true);
+		var e07 = echarts.init(document.getElementById('echart07'),'');
+		var option07 = {
+				tooltip: {
+					trigger: 'item',
+					formatter: "{b} <br/>{c} ({d}%)",
+					position: ['50%', '50%']
+				},
+				series: [{
+					type: 'pie',
+					radius: '95%',
+					center: ['50%', '50%'],
+					clockwise: true,
+					hoverAnimation: false,
+					data: [{
+						name:'光伏占比',
+						value: 100-45,
+						itemStyle: {
+							normal: {
+								color: '#232325',
+								borderWidth:2,
+								borderColor:'#0a2741',
+								label: {
+									show: false
+								},
+								labelLine: {
+									show: false
+								}
+							}
+						}
+					},{
+						name:'光伏占比',
+						value: 45,
+						itemStyle: {
+							normal: {
+								"color": 'rgba(20,205,102,0.5)',
+								borderWidth:2,
+								borderColor:'#14cd66',
+								label: {
+									show: false
+								},
+								labelLine: {
+									show: false
+								}
+							}
+						}
+					}],
+					label: {
+						normal: {
+							show: false
+						}
+					},
+					labelLine: {
+						normal: {
+							show: false
+						}
+					}
+				}]
+			};
+		e07.setOption(option07,true);
+		window.addEventListener("resize",function(){
+			e06.resize();
+			e07.resize();
+		});
+	});
+</script>
+</body>
+</html>

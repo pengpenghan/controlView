@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>demo</title>
+	<style type="text/css">
+	body,html{
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	}
+	.bg{
+		position: relative;
+		width: 100%;
+		height: 100%;
+		background-size: 100% 100%;
+		background-color:#122333;
+	}
+	.container{
+		width: 50%;
+		height :50%;
+		position: relative;
+		top: 20%;
+		margin:auto;
+	}
+	</style>
+</head>
+<body>
+	<div class="bg">
+		<div class="container" id="container">
+			
+		</div>
+	</div>
+<script type="text/javascript" src="../js/jquery-3.1.0.min.js"></script>
+<script type="text/javascript" src="../js/echarts/echarts.min.js"></script>
+<script type="text/javascript" src="../js/highcharts/highcharts.js"></script>
+<script type="text/javascript">
+	$(function () {
+		var option = {
+			backgroundColor : 'rgba(0,0,0,0)',
+			title: {
+				text: ''
+			},
+		  tooltip: {},
+		  legend: {
+			  show:false,
+			  top: 20,
+			  itemWidth: 12,
+			  itemHeight: 12,
+			  data: ['预算分配（Allocated Budget）', '实际开销（Actual Spending）'],
+			  textStyle: {
+				  color: 'red'
+			  }
+		  },
+		  radar: {
+			  radius: '60%',
+			  splitNumber: 8,
+			  splitArea: {
+				  areaStyle: {
+					  color: [
+						'rgba(129,132,137, 0.8)','rgba(129,132,137, 0.7)',
+						'rgba(129,132,137, 0.6)','rgba(129,132,137, 0.5)',
+						'rgba(129,132,137, 0.4)','rgba(129,132,137, 0.3)', 
+						'rgba(129,132,137, 0.2)','rgba(129,132,137, 0.1)'
+					]
+				  }
+			  },
+			  axisLine: {
+				  lineStyle: {
+					  color: 'rgba(78,106,153, 1)',
+					  width: 2,
+					  opacity: .2
+				  }
+			  },
+			  splitLine: {
+				lineStyle: {
+					color: [
+						'rgba(36,55,87, 0.1)', 'rgba(36,55,87, 0.2)',
+						'rgba(36,55,87, 0.4)', 'rgba(36,55,87, 0.6)',
+						'rgba(36,55,87, 0.8)', 'rgba(36,55,87, 1)'
+					].reverse()
+				}
+			  },
+			  name: {
+				  formatter: function (value, indicator) {
+					  var str = '';
+					  if (value.name.length > 10) {
+							str += value.name.split('/').join("/\n");
+						} else {
+							str += value.name;
+						}
+					  str += "\n"+value.value+"\n("+value.rate+"%)";
+					  return str;
+				  },
+				  textStyle: {
+						color: '#8693A3'
+					}
+			},
+				//[34,451,576,1024,148,201,406,175,751]
+			  indicator: [{
+				name: {
+					name:'其他/other',
+					value:34,
+					rate:0.09
+				},
+				max:1200
+			}, {
+				name:{
+					name: '内部停车场/private Parking',
+					value : 451,
+					rate:12.0
+				},
+				max:1200
+			}, {
+				name:{
+					name: '公共停车场/Public Parking',
+					value:576,
+					rate:15.3
+				},
+				max:1200
+			}, {
+				name:{
+					name: '汽车服务/Automobile service',
+					value:1024,
+					rate:27.2
+				},
+				max:1200
+			}, {
+				name:{
+					name: '体育休闲/Sports & leisure',
+					value:148,
+					rate:3.9
+				},
+				max:1200
+			},{
+				name:{
+					name: '办公/office',
+					value:201,
+					rate:5.3
+				},
+				max:1200
+			},{
+				name:{
+					name: '商场/Market',
+					value:406,
+					rate:10.8
+				},
+				max:1200
+			},{
+				name:{
+					name: '酒店/Hotel',
+					value:175,
+					rate:4.6
+				},
+				max:1200
+			},{
+				name:{
+					name: '住房/housing',
+					value:751,
+					rate:19.9
+				},
+				max:1200
+			}]
+		  },
+		  series: [{
+			  name: '预算 vs 开销（Budget vs spending）',
+			  type: 'radar',
+			  symbolSize: 10,
+			  itemStyle:{
+				  normal:{
+					  color : '#31EB14'
+				  }
+			  },
+			  lineStyle:{
+				  normal : {
+					  color : '#31EB14'
+				  }
+			  },
+			  areaStyle: {
+				  normal: {
+					  color: new echarts.graphic.LinearGradient(
+						0, 0, 0, 1,
+						[
+							{offset: 0, color: 'rgba(49,235,20,0.01)'},
+							{offset: 0.5, color: 'rgba(49,235,20,0.1)'},
+							{offset: 0.8, color: 'rgba(49,235,20,0.3)'},
+							{offset: 1, color: 'rgba(49,235,20,0.6)'}
+						]
+					  )
+				  }
+			  },
+			  data: [{
+				  value: [34,451,576,1024,148,201,406,175,751],
+				  name: '预算分配（Allocated Budget）',
+			  }]
+		  }]
+		};
+		var container = echarts.init(document.getElementById("container"),'');
+		container.setOption(option,true);
+		window.addEventListener("resize",function(){
+			myChart.resize();
+		});
+	});
+</script>
+</body>
+</html>

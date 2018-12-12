@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>demo</title>
+	<style type="text/css">
+	body,html{
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	}
+	.bg{
+		position: relative;
+		width: 100%;
+		height: 100%;
+		background-size: 100% 100%;
+		background-color:#122333;
+	}
+	.container{
+		color: #b6b6b6;
+		width: 50%;
+		height :50%;
+		position: relative;
+		top: 20%;
+		margin:auto;
+	}
+	</style>
+</head>
+<body>
+	<div class="bg">
+		<div class="container" id="container">
+			
+		</div>
+	</div>
+<script type="text/javascript" src="../js/jquery-3.1.0.min.js"></script>
+<script type="text/javascript" src="../js/echarts/echarts.min.js"></script>
+<script type="text/javascript" src="../js/highcharts/highcharts.js"></script>
+<script type="text/javascript">
+	$(function () {
+		//obj = obj.sort(sortBy('value',true,parseInt));
+		/**
+		 * 正序 通过value值对数组进行排序
+		 */
+		var sortBy=function (filed,rev,primer){
+			rev = (rev) ? -1 : 1;
+			return function (a, b) {
+				a = a[filed];
+				b = b[filed];
+				if (typeof (primer) != 'undefined') {
+					a = primer(a);
+					b = primer(b);
+				}
+				if (a < b) { return rev * -1; }
+				if (a > b) { return rev * 1; }
+				return 1;
+			}
+		};
+		var option = {
+			backgroundColor: 'rgba(0,0,0,0)',
+			tooltip : {
+				trigger: 'item',
+				formatter: "{a} <br/>{b} : {c} ({d}%)"
+			},
+			series : [
+				{
+					name:'电压等级',
+					type:'pie',
+					radius : ['0%', '75%'],
+					center: ['50%', '50%'],
+					data:[
+						{
+							value:100,
+							name:'208kV',
+							itemStyle: {
+								normal: {
+									color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+										offset: 0,
+										color: 'rgba(30,70,78,1)'
+									}, {
+										offset: 1,
+										color: 'rgba(30,70,78,1)'
+									}]),
+									shadowBlur: 20,
+									shadowColor: 'rgba(0, 0, 0, 0.5)'
+								}
+							}
+						},
+						{
+							value:120,
+							name:'120kV',
+							itemStyle: {
+								normal: {
+									color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+										offset: 0,
+										color: 'rgba(42,104,117,1)'
+									}, {
+										offset: 1,
+										color: 'rgba(42,104,117,1)'
+									}]),
+									shadowBlur: 20,
+									shadowColor: 'rgba(0, 0, 0, 0.5)'
+								}
+							}
+						},
+						{
+							value:130,
+							name:'40kV',
+							itemStyle: {
+								normal: {
+									color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+										offset: 0,
+										color: 'rgba(52,128,142,1)'
+									}, {
+										offset: 1,
+										color: 'rgba(52,128,142,1)'
+									}]),
+									shadowBlur: 20,
+									shadowColor: 'rgba(0, 0, 0, 0.5)'
+								}
+							}
+						},
+						{
+							value:140,
+							name:'7kV',
+							itemStyle: {
+								normal: {
+									color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+										offset: 0,
+										color: 'rgba(59,142,158,1)'
+									}, {
+										offset: 1,
+										color: 'rgba(59,142,158,1)'
+									}]),
+									shadowBlur: 20,
+									shadowColor: 'rgba(0, 0, 0, 0.5)'
+								}
+							}
+						},
+						{
+							value:150,
+							name:'3.5kV',
+							itemStyle: {
+								normal: {
+									color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+										offset: 0,
+										color: 'rgba(101,175,186,1)'
+									}, {
+										offset: 1,
+										color: 'rgba(101,175,186,1)'
+									}]),
+									shadowBlur: 20,
+									shadowColor: 'rgba(0, 0, 0, 0.5)'
+								}
+							}
+						}
+					].sort(function (a, b) { return a.value - b.value; }),
+					roseType: 'radius',
+					label: {
+						normal: {
+							textStyle: {
+								color: '#8793A3',
+								fontSize:25
+							}
+						}
+					},
+					labelLine: {
+						normal: {
+							lineStyle: {
+								color: 'rgba(18,74,175, 0.2)'
+							},
+							smooth: 0.2,
+							length: 10,
+							length2: 20
+						}
+					},
+					animationType: 'scale',
+					animationEasing: 'elasticOut',
+					animationDelay: function (idx) {
+						return Math.random() * 200;
+					}
+				}
+			]
+		}
+		var container = echarts.init(document.getElementById("container"),'');
+		container.setOption(option,true);
+		window.addEventListener("resize",function(){
+			myChart.resize();
+		});
+	});
+</script>
+</body>
+</html>
