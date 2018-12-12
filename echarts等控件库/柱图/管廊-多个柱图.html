@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>demo</title>
+	<style type="text/css">
+	body,html{
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	}
+	.bg{
+		position: relative;
+		width: 100%;
+		height: 100%;
+		background-size: 100% 100%;
+		background-color:#122333;
+	}
+	.container{
+		color: #b6b6b6;
+		width: 50%;
+		height :50%;
+		position: relative;
+		top: 20%;
+		margin:auto;
+	}
+	</style>
+</head>
+<body>
+	<div class="bg">
+		<div class="container" id="container">
+			
+		</div>
+	</div>
+<script type="text/javascript" src="../js/jquery-3.1.0.min.js"></script>
+<script type="text/javascript" src="../js/echarts/echarts.min.js"></script>
+<script type="text/javascript" src="../js/highcharts/highcharts.js"></script>
+<script type="text/javascript">
+	$(function(){
+		var option = {
+		    tooltip : {
+		        trigger: 'axis',
+		        axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+		            type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+		        },
+			borderColor: '#07A5EC',
+		    borderWidth: 1,
+		    backgroundColor: 'rgba(28,42,67,0.6)',
+		    formatter: '{b}月<br/>{a}:{c}<br/>{a1}:{c1}<br/>{a2}:{c2}<br/>{a3}:{c3}<br/>{a4}:{c4}'
+		    },
+		    legend: {
+		    	orient: 'horizontal',
+				x : 'center',
+				y : 15,
+				itemGap: 10,
+				itemWidth: 10,
+				itemHeight: 8,
+				textStyle : {
+					color : '#DFDFE1',
+					fontSize : 10,
+				},
+		        data:['环境监控','安全防患','监控与告警','供电系统','标识系统']
+		    },
+		    grid: {show:true,x:50,y:50,x2:40,y2:30,borderWidth:0,borderColor:'rgba(41,64,80,0)'},//改变图形控件的大小，数据越大图形越小
+		    xAxis : [
+		        {
+		            type : 'category',
+		            name:'（月）',
+			    	nameGap: 4,
+		    		nameTextStyle:{
+			    		color: '#78858D'
+			    	},
+			        axisLabel: {
+			            textStyle: {
+			                color: '#78858D'
+			            }
+			        },
+			        splitLine: {
+			            show: false
+			        },
+		            data : ['1','2','3','4','5','6','7','8','9','10','11','12']
+		        }
+		    ],
+		    yAxis : [
+		        {
+		            type : 'value',
+		            name: '（次）',
+		            nameGap: 4,
+			    	nameTextStyle:{
+			    		color: '#FFFFFF'
+			    	},
+			    	axisLabel: {
+			            textStyle: {
+			                color: '#B3C1CA'
+			            }
+			        },
+			        axisLine: {
+			            show: false
+			        },
+			        splitLine: {
+			            show: true,
+			            lineStyle:{
+			            	color:'rgba(34,51,59,0.8)'
+			            }
+			        }
+		        }
+		    ],
+		    series : [
+		        {
+		            name:'环境监控',
+		            type:'bar',
+		            stack: '广告',
+		            itemStyle:{
+		            	normal:{
+		            		color: '#3F4346',
+		            	}
+		            },
+		            data:[320, 332, 301, 334, 390, 330, 320, 332, 301, 334, 390, 330]
+		        },
+		        {
+		            name:'安全防患',
+		            type:'bar',
+		            stack: '广告',
+		            itemStyle:{
+		            	normal:{
+		            		color: '#48848E',
+		            	}
+		            },
+		            data:[120, 132, 101, 134, 90, 230, 210, 132, 101, 134, 90, 230]
+		        },
+		        {
+		            name:'监控与告警',
+		            type:'bar',
+		            stack: '广告',
+		            itemStyle:{
+		            	normal:{
+		            		color: '#CF8E7A',
+		            	}
+		            },
+		            data:[220, 182, 191, 234, 290, 330, 310, 182, 191, 234, 290, 330]
+		        },
+		        {
+		            name:'供电系统',
+		            type:'bar',
+		            itemStyle:{
+		            	normal:{
+		            		color: '#6EA385',
+		            	}
+		            },
+		            data:[150, 232, 201, 154, 190, 330, 410, 232, 201, 154, 190, 330]
+		        },
+		        {
+		            name:'标识系统',
+		            type:'bar',
+		            itemStyle:{
+		            	normal:{
+		            		color: '#8F4A00',
+		            	}
+		            },
+		            data:[862, 1018, 964, 1026, 1679, 1600, 1570, 1018, 964, 1026, 1679, 1600],
+		      /*      markLine : {
+		                lineStyle: {
+		                    normal: {
+		                        type: 'dashed'
+		                    }
+		                },
+		                data : [
+		                    [{type : 'min'}, {type : 'max'}]
+		                ]
+		            }*/
+		        }
+		    ]
+		};
+		var container = echarts.init(document.getElementById("container"),'');
+		container.setOption(option,true);
+		window.addEventListener("resize",function(){
+			myChart.resize();
+		});
+	});
+</script>
+</body>
+</html>

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>demo</title>
+	<style type="text/css">
+	body,html{
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	}
+	.bg{
+		position: relative;
+		width: 100%;
+		height: 100%;
+		background-size: 100% 100%;
+		background-color:#122333;
+	}
+	.container{
+		color: #b6b6b6;
+		width: 50%;
+		height :50%;
+		position: relative;
+		top: 20%;
+		margin:auto;
+	}
+	</style>
+</head>
+<body>
+	<div class="bg">
+		<div class="container" id="container">
+			
+		</div>
+	</div>
+<script type="text/javascript" src="../js/jquery-3.1.0.min.js"></script>
+<script type="text/javascript" src="../js/echarts/echarts.min.js"></script>
+<script type="text/javascript" src="../js/highcharts/highcharts.js"></script>
+<script type="text/javascript">
+	$(function(){
+		var container = echarts.init(document.getElementById('container'),'');
+		var option = {
+			grid: {show:true,x:60,y:50,x2:0,y2:30,borderWidth:1,borderColor:'rgba(41,64,80,0)'},//改变图形控件的大小，数据越大图形越小
+			 noDataLoadingOption : {
+					text : "No data to display.",
+					effect : 'bubble',
+					effectOption : {
+						backgroundColor : 'rgba(255,255,255,0)',
+						effect : {
+							n : 0
+						}
+					}
+				},
+			legend : {
+				orient: 'horizontal',
+				x : 'right',
+				y : 'top',
+				textStyle : {
+					color : '#DFDFE1',
+					fontSize : 10,
+				},
+				data : ['热力舱','电力舱','综合舱',]
+			},
+			tooltip: {
+				trigger: 'axis',
+		        borderColor: '#07A5EC',
+		        borderWidth: 1,
+		        backgroundColor: 'rgba(28,42,67,0.6)',
+		        formatter: "{a}:{c}<br/>{a1}:{c1}<br/>{a2}:{c2}"
+		    },
+		    xAxis: {
+		        //name:'（月）',
+		    	nameGap: 10,
+	    		nameTextStyle:{
+		    		color: '#78858D'
+		    	},
+		    	data: [2013,2014,2015,2016,2017],
+		        axisLabel: {
+		            textStyle: {
+		                color: '#78858D'
+		            }
+		        },
+		        splitLine: {
+		            show: false
+		        }
+		    },
+		    yAxis: [
+		    	{
+		    		name: '（km）',
+			    	nameTextStyle:{
+			    		color: '#FFFFFF'
+			    	},
+			    	axisLabel: {
+			            textStyle: {
+			                color: '#B3C1CA'
+			            }
+			        },
+			        axisLine: {
+			            show: false
+			        },
+			        splitLine: {
+			            show: true,
+			            lineStyle:{
+			            	color:'rgba(34,51,59,0.8)'
+			            }
+			        }
+		        }
+		    ],
+		    color: ['#6EDD90'],
+		    series: [
+		    {
+                name: '综合舱',
+                type: 'line',
+                itemStyle:{
+                    normal:{
+                        color:'#E065E4',
+                        borderColor : '#E065E4',
+                        borderWidth: 4,
+                    }
+                },
+                areaStyle: {
+                    normal: {
+                        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                            offset: 0,
+                            color: 'rgba(224,101,228, 0.2)'
+                        }, {
+                            offset: 1,
+                            color: 'rgba(224,101,228, 0)'
+                        }])
+                    }
+                },
+                data: [20,30,45,50,62],
+            },{
+                name: '电力舱',
+                type: 'line',
+                itemStyle:{
+                    normal:{
+                        color:'#227FF8',
+                        borderColor : '#227FF8',
+                        borderWidth: 4,
+                    }
+                },
+                areaStyle: {
+                    normal: {
+                        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                            offset: 0,
+                            color: 'rgba(34,127,248, 0.2)'
+                        }, {
+                            offset: 1,
+                            color: 'rgba(34,127,248, 0)'
+                        }])
+                    }
+                },
+                data: [44,50,61,70,90],
+            },{
+                name: '热力舱',
+                type: 'line',
+                itemStyle:{
+                    normal:{
+                        color:'#B3CD14',
+                        borderColor : '#B3CD14',
+                        borderWidth: 4,
+                    }
+                },
+                areaStyle: {
+                    normal: {
+                        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                            offset: 0,
+                            color: 'rgba(179,205,20, 0.2)'
+                        }, {
+                            offset: 1,
+                            color: 'rgba(179,205,20, 0)'
+                        }])
+                    }
+                },
+                data: [10,20,36,62,99],
+            }
+		    ]
+		};
+		container.setOption(option,true);
+		//自适应
+		window.addEventListener("resize",function(){
+			container.resize();
+		});
+	});
+</script>
+</body>
+</html>

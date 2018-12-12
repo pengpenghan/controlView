@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>demo</title>
+	<style type="text/css">
+	body,html{
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	}
+	.bg{
+		position: relative;
+		width: 100%;
+		height: 100%;
+		background-size: 100% 100%;
+		background-color:#122333;
+	}
+	.container{
+		color: #b6b6b6;
+		width: 50%;
+		height :50%;
+		position: relative;
+		top: 20%;
+		margin:auto;
+	}
+	</style>
+</head>
+<body>
+	<div class="bg">
+		<div class="container" id="container">
+			
+		</div>
+	</div>
+<script type="text/javascript" src="../js/jquery-3.1.0.min.js"></script>
+<script type="text/javascript" src="../js/echarts/echarts.min.js"></script>
+<script type="text/javascript" src="../js/highcharts/highcharts.js"></script>
+<script type="text/javascript">
+	$(function(){
+		var xAxisData = [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+		var data1 = [];
+		var data = [ 8, 5, 7, 8, 9, 5, 4, 6, 5, 3,3, 6 ];
+		var max = data[0];
+		var max_index = 0;
+		var split_max = 0; //网格最高设置
+		var index = new Array();
+		var MaxType = null;
+		for (var i = 0; i < data.length; i++) {
+			if (data[i] >= max) {
+				max = data[i];
+				max_index = i;
+			}
+		}
+		split_max = (max %2 == 0)?max + 2: max + 3;
+		for(var i = 0; i < data.length; i++){
+			if(data[i] == data[max_index]){
+				index.push(i);
+			}
+		}
+		for (var i = 0; i < data.length; i++) {
+			var num = data[i];
+			if ($.inArray(i,index)!=-1) {//如果当期值大于序时目标值变为红色 反之
+				color = "#ECA000";
+				data1.push({
+					value : num,
+					itemStyle : {
+						normal : {
+							barBorderRadius : 20,
+							color : color,
+							label : {
+								show : true,
+								position : 'top',
+								offset : [ 0, -10 ],
+								formatter : function(param) {
+									return param.value + "次";
+								}
+							}
+						}
+					},
+				})
+			} else {
+				color = "rgba(85,202,183,1)";
+				data1.push({
+					value : num,
+					itemStyle : {
+						normal : {
+							barBorderRadius : 20,
+							color : color,
+							label : {
+								show : false,
+								position : 'top',
+								offset : [ 0, -10 ],
+								formatter : function(param) {
+									return param.value;
+								}
+							}
+						}
+					},
+				})
+			}
+		}
+		option = {
+			grid : {
+				show : true,
+				x : 40,
+				y : 50,
+				x2 : 30,
+				y2 : 30,
+				borderWidth : 1,
+				borderColor : 'rgba(41,64,80,0)'
+			},//改变图形控件的大小，数据越大图形越小
+			tooltip : {
+				trigger : 'item',
+				borderColor : '#07A5EC',
+				borderWidth : 1,
+				backgroundColor : 'rgba(28,42,67,0.6)',
+				formatter : function(params) {
+					return params.name + "月</br>" + params.value + "次";
+				}
+			},
+			noDataLoadingOption : {
+				text : "No data to display.",
+				effect : 'bubble',
+				effectOption : {
+					backgroundColor : 'rgba(255,255,255,0)',
+					effect : {
+						n : 0
+					}
+				}
+			},
+			xAxis : [ {
+				name : '（月）',
+				nameGap : -2,
+				nameTextStyle : {
+					color : '#78858D'
+				},
+				data : xAxisData,
+				axisLabel : {
+					textStyle : {
+						color : '#78858D'
+					}
+				},
+				splitLine : {
+					show : false
+				}
+			}, {
+				// 辅助 x 轴
+				show : false,
+				data : xAxisData
+			} ],
+			yAxis : {
+				name : '（次）',
+				min : 0,
+				max : split_max,
+				nameTextStyle : {
+					color : '#FFFFFF'
+				},
+				axisLabel : {
+					textStyle : {
+						color : '#B3C1CA'
+					}
+				},
+				axisLine : {
+					show : false
+				},
+				splitLine : {
+					show : true,
+					lineStyle : {
+						color : 'rgba(34,51,59,0.8)'
+					}
+				}
+			},
+			series : [ {
+				// 辅助系列
+				type : 'bar',
+				silent : true,
+				xAxisIndex : 1,
+				itemStyle : {
+					normal : {
+						barBorderRadius : 20,
+						color : 'rgba(34,51,59,0.8)'
+					}
+				},
+				barWidth : 20,
+				data : data.map(function(val) {
+					return split_max;
+				})
+			}, {
+				type : 'bar',
+				data : data1,
+				barWidth : 20,
+				itemStyle : {
+					normal : {
+						barBorderRadius : 20,
+						color : 'rgba(85,202,183,1)',
+						shadowColor : 'rgba(0, 0, 0, 0.4)',
+						shadowBlur : 20,
+					}
+				}
+			} ]
+		};
+		var container = echarts.init(document.getElementById("container"),'');
+		container.setOption(option,true);
+		window.addEventListener("resize",function(){
+			myChart.resize();
+		});
+	});
+</script>
+</body>
+</html>

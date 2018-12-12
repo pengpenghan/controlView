@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>demo</title>
+	<style type="text/css">
+	body,html{
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	}
+	.bg{
+		position: relative;
+		width: 100%;
+		height: 100%;
+		background-size: 100% 100%;
+		background-color:#122333;
+	}
+	.container{
+		color: #b6b6b6;
+		width: 50%;
+		height :50%;
+		position: relative;
+		top: 20%;
+		margin:auto;
+	}
+	</style>
+</head>
+<body>
+	<div class="bg">
+		<div class="container" id="container">
+			
+		</div>
+	</div>
+<script type="text/javascript" src="../js/jquery-3.1.0.min.js"></script>
+<script type="text/javascript" src="../js/echarts/echarts.min.js"></script>
+<script type="text/javascript" src="../js/highcharts/highcharts.js"></script>
+<script type="text/javascript">
+	$(function(){
+		var option = {      
+		    tooltip: {  
+		        trigger: 'item',  
+				borderWidth: 2,
+			    borderColor: '#165484',
+			    backgroundColor: 'rgba(28,42,67,0.6)',
+		        formatter: '{b}:\n{c}%'  
+		    },    
+		    calculable: true,  
+		    grid: {  
+		        borderWidth: 0,  
+		        y: 80,  
+		        y2: 60  
+		    },  
+		    xAxis: [  
+		        {  
+		            type: 'category',  
+		            show: true,  
+		            data: ['永清路', '花神路','光明路','月安路','凤翔路','湖西路','迎宾路','清凉路','长阳路','江元路'],
+		            axisLabel: {
+                    show: true,
+                    textStyle: {
+                    color: '#fff'
+                 }
+             }
+  
+		        }  
+		    ],  
+		    yAxis: [  		            
+		        {  name: '（故障率）',
+	    	nameTextStyle:{
+	    		color: '#FFFFFF'
+	    	},
+		            type: 'value',  
+		            axisLabel: {  
+		                  show: true,  
+		                  interval: 'auto',  
+		                  formatter: '{value} %',
+		                  textStyle: {
+                           color: '#fff'
+                          }  
+		                },  
+		  splitLine: {
+	            show: true,
+	            lineStyle:{
+	            	color:'rgba(34,51,59,0.8)'
+	            }
+	        },
+		            show: true  
+		        }  
+		    ],  
+		    series: [  
+		        {  
+		            name: 'Age',  
+		            type: 'bar', 
+		            barWidth: 15, 
+		            itemStyle: {  
+		                normal: {
+			 barBorderRadius: 20, 
+		                    color: function(params) {  
+		                        // build a color map as your need.  
+		                        var colorList = [  
+		                          '#07A5EC','#07A5EC','green','#E87C25','#07A5EC',  
+		                           '#07A5EC','#07A5EC','#07A5EC','#07A5EC','#07A5EC'  
+		                        ];  
+		                        return colorList[params.dataIndex]  
+		                    },  
+		                    label: {  
+		                        show: true,  
+		                        position: 'top',
+		                        formatter: '{c} %' 
+		                    }  
+		                }  
+		            },  
+		            data: [7,3,2,22,10,6,17,12,9,17]
+		        }  
+		    ]  
+		}; 
+		var container = echarts.init(document.getElementById("container"),'');
+		container.setOption(option,true);
+		window.addEventListener("resize",function(){
+			myChart.resize();
+		});
+	});
+</script>
+</body>
+</html>

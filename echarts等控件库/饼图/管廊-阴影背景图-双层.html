@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>demo</title>
+	<style type="text/css">
+	body,html{
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	}
+	.bg{
+		position: relative;
+		width: 100%;
+		height: 100%;
+		background-size: 100% 100%;
+		background-color:#122333;
+	}
+	.container{
+		color: #b6b6b6;
+		width: 50%;
+		height :50%;
+		position: relative;
+		top: 20%;
+		margin:auto;
+	}
+	</style>
+</head>
+<body>
+	<div class="bg">
+		<div class="container" id="container">
+			
+		</div>
+	</div>
+<script type="text/javascript" src="../js/jquery-3.1.0.min.js"></script>
+<script type="text/javascript" src="../js/echarts/echarts.min.js"></script>
+<script type="text/javascript" src="../js/highcharts/highcharts.js"></script>
+<script type="text/javascript">
+	$(function () {
+		var option = {
+		    title:{
+		    	text: "巡视计划18张",
+		        textStyle:{
+		        	color:'#C7CED5',
+		        	fontSize: 30,
+		        },
+		        x:"center",
+		        y: "center"
+		    },
+		    noDataLoadingOption : {
+				text : "No data to display.",
+				effect : 'bubble',
+				effectOption : {
+					backgroundColor : 'rgba(255,255,255,0)',
+					effect : {
+						n : 0
+					}
+				}
+			},
+			tooltip: {
+				trigger: 'item',
+				borderColor: '#07A5EC',
+				borderWidth: 1,
+				backgroundColor: 'rgba(28,42,67,0.6)',
+				formatter: "{b}:</br>{c}({d}%)"
+			},
+			series: [
+			 {
+				type: 'pie',
+				radius: [0, '45%'],
+
+				label: {
+					normal: {
+						show : false,
+						//position: 'outer'
+					}
+				},
+				labelLine: {
+					normal: {
+						show: false
+					}
+				},
+				data: [{
+					name: '已完成巡视',
+					value: 16,
+					itemStyle:{
+						normal:{
+							color: '#644DA7'
+						}
+					}
+				}, {
+					name: '未完成巡视',
+					value: 2,
+					itemStyle:{
+						normal:{
+							color: '#425657'
+						}
+					}
+				}]
+			}, 
+			{
+				type: 'pie',
+				radius: ['45%', '60%'],
+				hoverAnimation: false,
+				itemStyle:{
+					normal:{
+						color : 'rgba(84,101,112,0.2)'
+					}
+				},
+				label: {
+					normal: {
+						show : false,
+						//position: 'outer'
+					}
+				},
+				labelLine: {
+					normal: {
+						show: false
+					}
+				},
+				data: [{
+					value: 360,
+					tooltip:{
+						show: false
+					}
+				}]
+			}, 
+			{
+				type: 'pie',
+				radius: ['60%', '80%'],
+				//hoverAnimation: false,
+				selectedMode: false,
+				label: {
+					normal: {
+						show : false,
+						//position: 'outer'
+					}
+				},
+				labelLine: {
+					normal: {
+						show: false
+					}
+				},
+				data: [
+					{
+						name: '临时巡查',
+						value: 3,
+						itemStyle:{
+							normal:{
+								color: '#A4AEB7'
+							}
+						}
+					}, {
+						name: '新增设备',
+						value: 4,
+						itemStyle:{
+							normal:{
+								color: '#A8A33B'
+							}
+						}
+					}, {
+						name: '临时检修',
+						value: 4,
+						itemStyle:{
+							normal:{
+								color: '#B8682B'
+							}
+						}
+					}, 
+				   {
+					name: '定期巡查',
+					value: 3,
+					itemStyle:{
+						normal:{
+							color: '#00C679'
+						}
+					}
+				},
+				]
+			},{
+				type: 'pie',
+				radius: ['80%', '95%'],
+				hoverAnimation: false,
+				selectedMode: false,
+				itemStyle:{
+					normal:{
+						color : 'rgba(84,101,112,0.2)'
+					}
+				},
+				label: {
+					normal: {
+						show : false,
+						//position: 'outer'
+					}
+				},
+				labelLine: {
+					normal: {
+						show: false
+					}
+				},
+				data: [{
+					value: 360,
+					tooltip:{
+						show: false
+					}
+				}]
+			},]
+		};
+		var container = echarts.init(document.getElementById("container"),'');
+		container.setOption(option,true);
+		window.addEventListener("resize",function(){
+			myChart.resize();
+		});
+	});
+</script>
+</body>
+</html>

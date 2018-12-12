@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>demo</title>
+	<style type="text/css">
+	body,html{
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	}
+	.bg{
+		position: relative;
+		width: 100%;
+		height: 100%;
+		background-size: 100% 100%;
+		background-color:#122333;
+	}
+	.container{
+		color: #b6b6b6;
+		width: 50%;
+		height :50%;
+		position: relative;
+		top: 20%;
+		margin:auto;
+	}
+	</style>
+</head>
+<body>
+	<div class="bg">
+		<div class="container" id="container">
+			
+		</div>
+	</div>
+<script type="text/javascript" src="../js/jquery-3.1.0.min.js"></script>
+<script type="text/javascript" src="../js/echarts/echarts.min.js"></script>
+<script type="text/javascript" src="../js/highcharts/highcharts.js"></script>
+<script type="text/javascript">
+	$(function () {
+		var dataStyle = {
+			normal: {
+				label: {show:false},
+				labelLine: {show:false}
+			}
+		};
+		var placeHolderStyle = {
+			normal: {
+				color: 'rgba(0,0,0,0)',
+				label: {
+					show: false
+				},
+				labelLine: {
+					show: false
+				}
+			},
+			emphasis: {
+				color: 'rgba(0,0,0,0)'
+			}
+		};
+		var option = {
+			title: {
+				text: '平均故障率\n1.33%',
+				x: 'center',
+				y: 'center',
+				itemGap: 20,
+				textStyle: {
+					color: 'rgba(30,144,255,0.8)',
+					fontFamily: '微软雅黑',
+					fontSize:15,
+					fontWeight: 'bolder'
+				}
+			},
+			tooltip: {
+				show: true,
+				borderWidth: 2,
+				borderColor: '#165484',
+				backgroundColor: 'rgba(28,42,67,0.6)',
+				formatter: "{a} <br/>{b}"
+			},
+			legend: {
+				orient: 'vertical',
+				x : document.getElementById('container').offsetWidth / 2,
+				y: 92,
+				itemGap: 16.5,
+				data: ['2.89%', '1.36%', '0.87%','0.23%'],
+				textStyle: {
+					color: '#fff'
+				   }  
+			},
+		  
+			series: [{
+				name: '春季',
+				type: 'pie',
+				clockWise: false,
+				radius: [130, 150],
+				label:{
+					normal:{
+						formatter:"春季",
+						textStyle:{
+							fontSize:20
+						}
+					}
+				},
+				itemStyle: {
+					normal:{
+						color : '#E87C25',
+					   
+					}
+				},
+				data: [{
+					value: 60,
+					name: '2.89%'
+				}, {
+					value: 32,
+					name: 'invisible',
+					itemStyle: placeHolderStyle
+				}]
+			}, {
+				
+				name: '夏季',
+				type: 'pie',
+				clockWise: false,
+				radius: [100, 120],
+				  itemStyle: {
+					normal:{
+						color : '#07A5EC'
+					}
+				},
+				label:{
+					normal:{
+						formatter:"夏季",
+						textStyle:{
+							fontSize:20
+						}
+					}
+				},
+				labelLine:{
+					normal:{length:50  }
+				},
+				data: [{
+					value:55,
+					name: '1.36%'
+				}, {
+					value: 71,
+					name: 'invisible',
+					itemStyle: placeHolderStyle
+				}]
+			},
+			{
+				name: '秋季',
+				type: 'pie',
+				clockWise: false,
+				radius: [70, 90],
+				 itemStyle: {
+					normal:{
+						color : '#07A5EC'
+					}
+				},
+				label:{
+					normal:{
+						formatter:"秋季",
+						textStyle:{
+							fontSize:20
+						}
+					}
+				},
+				 labelLine:{
+					normal:{length:70  }
+				},
+				data: [{
+					value: 50,
+					name: '0.87%'
+				}, {
+					value: 97,
+					name: 'invisible',
+					itemStyle: placeHolderStyle
+				}]
+			},
+			 {
+				name: '冬季',
+				type: 'pie',
+				clockWise: false,
+				radius: [40, 60],
+				 itemStyle: {
+					normal:{
+						color : 'green'
+					}
+				},
+				label:{
+					normal:{
+						formatter:"冬季",
+						textStyle:{
+							fontSize:20
+						}
+					}
+				},
+				labelLine:{
+					normal:{length:100  }
+				},
+				data: [{
+					value: 40,
+					name: '0.23%'
+				}, {
+					value: 97,
+					name: 'invisible',
+					itemStyle: placeHolderStyle
+				}]
+			}]
+		};
+		var container = echarts.init(document.getElementById("container"),'');
+		container.setOption(option,true);
+		window.addEventListener("resize",function(){
+			myChart.resize();
+		});
+	});
+</script>
+</body>
+</html>

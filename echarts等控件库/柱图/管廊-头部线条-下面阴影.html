@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>demo</title>
+	<style type="text/css">
+	body,html{
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	}
+	.bg{
+		position: relative;
+		width: 100%;
+		height: 100%;
+		background-size: 100% 100%;
+		background-color:#122333;
+	}
+	.container{
+		color: #b6b6b6;
+		width: 50%;
+		height :50%;
+		position: relative;
+		top: 20%;
+		margin:auto;
+	}
+	</style>
+</head>
+<body>
+	<div class="bg">
+		<div class="container" id="container">
+			
+		</div>
+	</div>
+<script type="text/javascript" src="../js/jquery-3.1.0.min.js"></script>
+<script type="text/javascript" src="../js/echarts/echarts.min.js"></script>
+<script type="text/javascript" src="../js/highcharts/highcharts.js"></script>
+<script type="text/javascript">
+	$(function(){
+		var option = {
+			noDataLoadingOption : {
+				text : "No data to display.",
+				effect : 'bubble',
+				effectOption : {
+					backgroundColor : 'rgba(255,255,255,0)',
+					effect : {
+						n : 0
+					}
+				}
+			},
+			tooltip : {
+		        trigger: 'axis',
+		        axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+		            type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+		        },
+		        borderColor: '#07A5EC',
+		        borderWidth: 1,
+		        backgroundColor: 'rgba(28,42,67,0.6)',
+		        formatter:'{b}:{c}'
+		        //position: [40,10]
+		    },
+		    grid: {show:true,x:40,y:30,x2:0,y2:30,borderWidth:1,borderColor:'rgba(41,64,80,1)'},//改变图形控件的大小，数据越大图形越小
+		    xAxis: {
+		       //splitNumber:20,
+		       type : 'category',
+		       splitLine: {
+		    	   show: true,
+		            lineStyle:{
+		                type:'dashed',
+		                color: 'rgba(41,64,80,1)'
+		            }
+		        },
+		       axisLine: {
+		            lineStyle:{
+		                type:'solid',
+		                color :'rgba(41,64,80,1)'
+		            }
+		        },
+		        axisLabel: {
+		            show: true,
+		            interval: 0,
+		            textStyle: {
+		                color: '#AFBCC2'
+		            }
+		        },
+		        data : ['电力','给水','热力','燃气','污水','通信']
+		    },
+		    yAxis: {
+		    	name:'（个）',
+		    	nameTextStyle:{
+		    		color: '#FFFFFF'
+		    	},
+		    	type : 'value',
+		        position: 'top',
+		        splitLine: {
+		            lineStyle:{
+		                type:'dashed',
+		                width: 1.2,
+		                color: 'rgba(41,64,80,1)'
+		            }
+		        },
+		        axisLine: {
+		            lineStyle:{
+		                type:'solid',
+		                color :'rgba(41,64,80,1)'
+		            }
+		        },
+		        axisLabel: {
+		        	show: true,
+		        	textStyle: {
+		                color: '#AFBCC2',
+		            },
+//		            formatter: function(param){
+//		            	return param + '%';
+//		            }
+		        }
+		    },
+		    series : [
+		        {
+		            name:'月开支',
+		            type:'bar',
+		            stack: '月份',
+		            label: {
+		                normal: {
+		                    textStyle: {
+		                        color: '#01AAEF',
+		                        fontSize: 18
+		                    },
+		                    //position: ['40%', '-62%'],
+		                    position: 'top',
+		                    offset:[0,-10],
+		                    show: true,
+		                    formatter: '{c}'
+		                }
+		            },
+		            barCategoryGap: 0,
+		            itemStyle: {
+		                normal: {
+		                    color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [{
+		                        offset: 0,
+		                        color: 'rgba(41, 64, 80, 0.7)'
+		                    }, {
+		                        offset: 0.5,
+		                        color: 'rgba(41, 64, 80, 0.7)'
+		                    }, {
+		                        offset: 0.8,
+		                        color: 'rgba(41, 64, 80, 0.7)'
+		                    }, {
+		                        offset: 0.92,
+		                        color: 'rgba(41, 64, 80, 0.7)'
+		                    }, {
+		                        offset: 1,
+		                        color: 'rgba(41, 64, 80, 0.7)'
+		                    }])
+		                }  
+		            },
+		            data:[32,45,32,15,52,39]
+		        },
+		        {
+		            type: 'bar',
+		            stack: '月份',
+		            silent: true,
+		            data: [0, 0, 0, 0, 0, 0, 0],
+		            itemStyle: {
+		                normal: {
+		                    color: '#01AAEF',
+		                    //shadowColor: '#01AAEF',
+		                    //shadowBlur: 10,
+		                    //shadowOffsetX: -4
+		                }
+		            },
+		            barMinHeight: 5
+		        }
+		    ]
+		};
+		var container = echarts.init(document.getElementById("container"),'');
+		container.setOption(option,true);
+		window.addEventListener("resize",function(){
+			myChart.resize();
+		});
+	});
+</script>
+</body>
+</html>

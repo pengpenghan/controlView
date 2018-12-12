@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>demo</title>
+	<style type="text/css">
+	body,html{
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	}
+	.bg{
+		position: relative;
+		width: 100%;
+		height: 100%;
+		background-size: 100% 100%;
+		background-color:#122333;
+	}
+	.container{
+		color: #b6b6b6;
+		width: 50%;
+		height :50%;
+		position: relative;
+		top: 20%;
+		margin:auto;
+	}
+	</style>
+</head>
+<body>
+	<div class="bg">
+		<div class="container" id="container">
+			
+		</div>
+	</div>
+<script type="text/javascript" src="../js/jquery-3.1.0.min.js"></script>
+<script type="text/javascript" src="../js/echarts/echarts.min.js"></script>
+<script type="text/javascript" src="../js/highcharts/highcharts.js"></script>
+<script type="text/javascript">
+	$(function(){
+		option = {
+			grid: {show:true,x:40,y:50,x2:50,y2:30,borderWidth:1,borderColor:'rgba(41,64,80,0)'},//改变图形控件的大小，数据越大图形越小
+			 noDataLoadingOption : {
+					text : "No data to display.",
+					effect : 'bubble',
+					effectOption : {
+						backgroundColor : 'rgba(255,255,255,0)',
+						effect : {
+							n : 0
+						}
+					}
+				},
+			tooltip: {
+				trigger: 'axis',
+		        borderColor: '#07A5EC',
+		        borderWidth: 1,
+		        backgroundColor: 'rgba(28,42,67,0.6)',
+		        formatter: "{b}月<br/>{a}:{c}<br/>{a1}:{c1}"
+//		        formatter: function(params){
+//		        	var str = '巡视次数：'+params.value+"<br/>";
+//		        	var data = option.series[1].data;
+//		        	for(var i =0;i<data.length;i++){
+//		        		if(params.name == data[i].name){
+//		        			str = str + '巡视时间：' + data[i].value;
+//		        			break;
+//		        		}
+//		        	}
+//		        	return str;
+//		        }
+		    },
+		    legend : {
+				orient: 'horizontal',
+				x : 'center',
+				y : 10,
+				textStyle : {
+					color : '#DFDFE1',
+					fontSize : 10,
+				},
+				data : ['巡视次数','巡视时间',]
+			},
+		    xAxis: {
+		        name:'（月）',
+		    	nameGap: 15,
+	    		nameTextStyle:{
+		    		color: '#78858D'
+		    	},
+		    	boundaryGap: ['200%', '50%'],
+		    	data: [1,2,3,4,5,6,7,8,9,10,11,12],
+		        axisLabel: {
+		            textStyle: {
+		                color: '#78858D'
+		            }
+		        },
+		        splitLine: {
+		            show: false
+		        }
+		    },
+		    yAxis: [
+		    	{
+		    		name: '（次）',
+			    	nameTextStyle:{
+			    		color: '#FFFFFF'
+			    	},
+			    	axisLabel: {
+			            textStyle: {
+			                color: '#B3C1CA'
+			            }
+			        },
+			        axisLine: {
+			            show: false
+			        },
+			        axisTick: {
+			            show: false
+			        },
+			        splitLine: {
+			            show: true,
+			            lineStyle:{
+			            	color:'rgba(34,51,59,0.8)'
+			            }
+			        }
+		        },{
+		        	name: '（小时）',
+		        	min : 0,
+		        	max : 60,
+			    	nameTextStyle:{
+			    		color: '#FFFFFF'
+			    	},
+			    	axisLabel: {
+			            textStyle: {
+			                color: '#B3C1CA'
+			            }
+			        },
+			        axisTick: {
+			            show: false
+			        },
+			        axisLine: {
+			            show: false
+			        },
+			        splitLine: {
+			            show: false,
+			            lineStyle:{
+			            	color:'rgba(34,51,59,0.8)'
+			            }
+			        }
+		        }
+		    ],
+		    color: ['#6EDD90'],
+		    series: [{
+		        name: '巡视次数',
+		        type: 'pictorialBar',
+		        barCategoryGap: '-10%',
+		        // symbol: 'path://M0,10 L10,10 L5,0 L0,10 z',
+		        symbol: 'path://M0,10 L10,10 C5.5,10 5.5,5 5,0 C4.5,5 4.5,10 0,10 z',
+		        itemStyle: {
+		            normal: {
+		                opacity: 1
+		            },
+		            emphasis: {
+		                opacity: 1
+		            }
+		        },
+		        data: [10,10,21,9,5,5,8,15,28,33,17,10],//
+		        //z: 10
+		    },
+		    {
+                name: '巡视时间',
+                type: 'line',
+                yAxisIndex: 1,
+                itemStyle:{
+                    normal:{
+                        color:'#227FF8',
+                    }
+                },
+                areaStyle: {
+                    normal: {
+                        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                            offset: 0,
+                            color: 'rgba(34,127,248, 0.2)'
+                        }, {
+                            offset: 1,
+                            color: 'rgba(34,127,248, 0)'
+                        }])
+                    }
+                },//
+                data: [50,20,30,42,35,39,40,21,50,44,26,50],
+            }
+		    ]
+		};
+		var container = echarts.init(document.getElementById("container"),'');
+		container.setOption(option,true);
+		window.addEventListener("resize",function(){
+			myChart.resize();
+		});
+	});
+</script>
+</body>
+</html>

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>demo</title>
+	<style type="text/css">
+	body,html{
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	}
+	.bg{
+		position: relative;
+		width: 100%;
+		height: 100%;
+		background-size: 100% 100%;
+		background-color:#122333;
+	}
+	.container{
+		color: #b6b6b6;
+		width: 50%;
+		height :50%;
+		position: relative;
+		top: 20%;
+		margin:auto;
+	}
+	</style>
+</head>
+<body>
+	<div class="bg">
+		<div class="container" id="container">
+			
+		</div>
+	</div>
+<script type="text/javascript" src="../js/jquery-3.1.0.min.js"></script>
+<script type="text/javascript" src="../js/echarts/echarts.min.js"></script>
+<script type="text/javascript" src="../js/highcharts/highcharts.js"></script>
+<script type="text/javascript">
+	$(function(){
+		var xAxisData = ['电力','给水','热力','燃气','污水','通信'];
+		var data1 = [];
+		var data = [95,31,52,76,43,12];
+		for (var i = 0; i < data.length; i++) {
+			var num = data[i];
+			color = new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+				offset: 0,
+				color: 'rgba(124,127,196, 1)'
+			}, {
+				offset: 0.5,
+				color: 'rgba(59,113,201, 1)'
+			}, {
+				offset: 1,
+				color: 'rgba(14,101,207, 1)'
+			}]);
+			data1.push({
+				value:num,
+				itemStyle:{
+					normal:{
+						barBorderRadius: 20,
+						borderWidth: 1,
+						borderColor: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+							offset: 0,
+							color: 'rgba(14,101,207, 1)'
+						}, {
+							offset: 0.5,
+							color: 'rgba(59,113,201, 1)'
+						}, {
+							offset: 1,
+							color: 'rgba(140,110,200, 1)'
+						}]),
+						color:color,
+						label:{
+							show: true,
+							position: 'top',
+							offset: [0,-6],
+							formatter:function(param){
+								return param.value;
+							}
+						}
+					}
+				},
+			})
+		}
+		option = {
+			grid: {show:true,x:40,y:50,x2:0,y2:30,borderWidth:1,borderColor:'rgba(41,64,80,0)'},//改变图形控件的大小，数据越大图形越小
+			tooltip : {
+				trigger: 'item',
+				borderColor: '#07A5EC',
+				borderWidth: 1,
+				backgroundColor: 'rgba(28,42,67,0.6)',
+				formatter: function (params) {
+					return  params.name+"：</br>"+params.value+"m";
+				}
+			},
+			noDataLoadingOption : {
+				text : "No data to display.",
+				effect : 'bubble',
+				effectOption : {
+					backgroundColor : 'rgba(255,255,255,0)',
+					effect : {
+						n : 0
+					}
+				}
+			},
+			xAxis: [{
+				//name:'（月）',
+				nameGap: -10,
+				nameTextStyle:{
+					color: '#78858D'
+				},
+				data: xAxisData,
+				axisLabel: {
+					show: true,
+					interval: 0,
+					textStyle: {
+						color: '#78858D'
+					}
+				},
+				splitLine: {
+					show: false
+				}
+			}, {
+				// 辅助 x 轴
+				show: false,
+				data: xAxisData  
+			}],
+			yAxis: {
+				name: '（km）',
+				nameTextStyle:{
+					color: '#FFFFFF'
+				},
+				axisLabel: {
+					textStyle: {
+						color: '#B3C1CA'
+					}
+				},
+				axisLine: {
+					show: false
+				},
+				splitLine: {
+					show: true,
+					lineStyle:{
+						color:'rgba(34,51,59,0.8)'
+					}
+				}
+			},
+			series: [{
+				type: 'bar',
+				data: data1,
+				barWidth: 25,
+				itemStyle: {
+					normal: {
+						barBorderRadius: 20,
+						//color: 'red',
+						//shadowColor: 'red',
+						//shadowBlur: 20,
+						shadowColor: 'rgba(0, 0, 0, 0.1)',
+						shadowBlur: 10
+					},
+					emphasis: {
+						color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+							offset: 0,
+							color: 'rgba(17, 168,171, 1)'
+						}, {
+							offset: 1,
+							color: 'rgba(17, 168,171, 0.1)'
+						}]),
+					}
+				}
+			}]
+		};
+		var container = echarts.init(document.getElementById("container"),'');
+		container.setOption(option,true);
+		window.addEventListener("resize",function(){
+			myChart.resize();
+		});
+	});
+</script>
+</body>
+</html>

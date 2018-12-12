@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>demo</title>
+	<style type="text/css">
+	body,html{
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	}
+	.bg{
+		position: relative;
+		width: 100%;
+		height: 100%;
+		background-size: 100% 100%;
+		background-color:#122333;
+	}
+	.container{
+		color: #b6b6b6;
+		width: 50%;
+		height :50%;
+		position: relative;
+		top: 20%;
+		margin:auto;
+	}
+	</style>
+</head>
+<body>
+	<div class="bg">
+		<div class="container" id="container">
+			
+		</div>
+	</div>
+<script type="text/javascript" src="../js/jquery-3.1.0.min.js"></script>
+<script type="text/javascript" src="../js/echarts/echarts.min.js"></script>
+<script type="text/javascript" src="../js/highcharts/highcharts.js"></script>
+<script type="text/javascript">
+	$(function () {
+		var option = {
+		    title:{
+		        text: "管线设备资产",
+		        textStyle:{
+		        	color:'#698EE9',
+		        	fontSize: 25,
+		        },
+		        subtext: "13555",
+		        subtextStyle:{
+		        	color:'#DCE3EB',
+		        	fontSize: 30,
+		        },
+		        x:"center",
+		        y: "center"
+		    },
+		    noDataLoadingOption : {
+				text : "No data to display.",
+				effect : 'bubble',
+				effectOption : {
+					backgroundColor : 'rgba(255,255,255,0)',
+					effect : {
+						n : 0
+					}
+				}
+			},
+		    tooltip: {
+		        trigger: 'item',
+		        borderColor: '#07A5EC',
+		        borderWidth: 1,
+		        backgroundColor: 'rgba(28,42,67,0.6)',
+		        formatter: "{b}:</br>{c}({d}%)"
+		    },
+		    series: [
+		    {
+		        type: 'pie',
+		        radius: [0, '60%'],
+		        hoverAnimation: false,
+		        itemStyle:{
+		        	normal:{
+		        		color : 'rgba(84,101,112,0.2)'
+		        	}
+		        },
+		        label: {
+		            normal: {
+		            	show : false,
+		                //position: 'outer'
+		            }
+		        },
+		        labelLine: {
+		            normal: {
+		                show: false
+		            }
+		        },
+		        data: [{
+		            value: 360,
+		            tooltip:{
+		            	show: false
+		            }
+		        }]
+		    }, 
+		    {
+		        type: 'pie',
+		        radius: ['60%', '80%'],
+		        //hoverAnimation: false,
+		        selectedMode: false,
+		        label: {
+		            normal: {
+		            	show : false,
+		                //position: 'outer'
+		            }
+		        },
+		        labelLine: {
+		            normal: {
+		                show: false
+		            }
+		        },
+		        data: [
+					{
+					    name: '通信',
+					    value: 1136,
+					    itemStyle:{
+					    	normal:{
+					    		color: '#01EB7A'
+					    	}
+					    }
+					},
+	               {
+		            name: '污水',
+		            value: 2336,
+		            itemStyle:{
+		            	normal:{
+		            		color: '#00A1BE'
+		            	}
+		            }
+		        }, {
+		            name: '燃气',
+		            value: 2325,
+		            itemStyle:{
+		            	normal:{
+		            		color: '#1265E7'
+		            	}
+		            }
+		        }, {
+		            name: '热力',
+		            value: 2562,
+		            itemStyle:{
+		            	normal:{
+		            		color: '#B764E8'
+		            	}
+		            }
+		        }, {
+		            name: '给水',
+		            value: 2453,
+		            itemStyle:{
+		            	normal:{
+		            		color: '#FE80BF'
+		            	}
+		            }
+		        }, {
+		            name: '电力',
+		            value: 2743,
+		            itemStyle:{
+		            	normal:{
+		            		color: '#FEC762'
+		            	}
+		            }
+		        }
+		        ]
+		    },{
+		        type: 'pie',
+		        radius: ['80%', '95%'],
+		        hoverAnimation: false,
+		        selectedMode: false,
+		        itemStyle:{
+		        	normal:{
+		        		color : 'rgba(84,101,112,0.2)'
+		        	}
+		        },
+		        label: {
+		            normal: {
+		            	show : false,
+		                //position: 'outer'
+		            }
+		        },
+		        labelLine: {
+		            normal: {
+		                show: false
+		            }
+		        },
+		        data: [{
+		            value: 360,
+		            tooltip:{
+		            	show: false
+		            }
+		        }]
+		    },]
+		};
+		var container = echarts.init(document.getElementById("container"),'');
+		container.setOption(option,true);
+		window.addEventListener("resize",function(){
+			myChart.resize();
+		});
+	});
+</script>
+</body>
+</html>
